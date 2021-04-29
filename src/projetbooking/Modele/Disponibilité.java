@@ -1,4 +1,6 @@
-package projetbooking;
+package projetbooking.Modele;
+
+
 
 /**
  * 

@@ -1,4 +1,4 @@
-package projetbooking;
+package projetbooking.Modele;
 
 /**
  * Classe d'une réservation
