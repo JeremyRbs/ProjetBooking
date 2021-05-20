@@ -49,11 +49,6 @@ public class FenetreMenuConnexion extends Fenetre {
         fieldPanel = new JPanel();
         fieldPanel.setLayout(new GridLayout(5,2,3,3));
         fieldPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
-        etiquetteMail = new JLabel("Mail: ");
-        password = new JLabel("Mot de passe: ");
-        nameField = new JTextField(15);
-        emailField = new JTextField(15);
-        passwordField = new JTextField(15);
         fieldPanel.add(name);
         fieldPanel.add(nameField);
         fieldPanel.add(email);
