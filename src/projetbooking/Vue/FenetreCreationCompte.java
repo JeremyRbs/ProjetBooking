@@ -11,11 +11,11 @@ import java.net.*;
 public class FenetreCreationCompte extends Fenetre {
 
     // Déclarations des champs privés
-    private JFrame frame;
-    private JPanel fieldPanel, mainPanel;
-    private JLabel name, email, password, label_creer;
-    private JTextField nameField, emailField, passwordField, countryCode;
-    private JButton bouton_creer;
+    JFrame frame;
+    JPanel fieldPanel, mainPanel;
+    JLabel name, email, password, label_creer;
+    JTextField nameField, emailField, passwordField, countryCode;
+    JButton bouton_creer;
 
     // Constructeur de la classe
     public FenetreCreationCompte(String titre)
