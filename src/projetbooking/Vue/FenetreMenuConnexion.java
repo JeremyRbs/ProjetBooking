@@ -30,15 +30,15 @@ import javax.swing.SwingUtilities;
 public class FenetreMenuConnexion extends Fenetre {
 
     // Déclarations des champs privés
-    JFrame frame;
-    JPanel fieldPanel, mainPanel;
-    private final JButton boutonConnexion = new JButton("Connexion");
-    private final JButton boutonQuitter = new JButton("Quitter");
-    private final JLabel etiquette = new JLabel("Page de connexion");
-    private final JLabel etiquetteMail = new JLabel("Adresse mail :");
-    private final JLabel etiquettePassword = new JLabel("Mot de passe : ");
-    private final JTextField champMail = new JTextField("", 10);
-    private final JTextField champPassword = new JTextField("", 10);
+    private JFrame frame;
+    private JPanel fieldPanel, mainPanel;
+    private JButton boutonConnexion;
+    private JButton boutonQuitter;
+    private JLabel etiquette;
+    private JLabel etiquetteMail;
+    private JLabel etiquettePassword;
+    private JTextField champMail;
+    private JTextField champPassword;
 
     // Constructeur de la classe
     public FenetreMenuConnexion(String titre) {
@@ -49,17 +49,19 @@ public class FenetreMenuConnexion extends Fenetre {
         fieldPanel = new JPanel();
         fieldPanel.setLayout(new GridLayout(5,2,3,3));
         fieldPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
-        etiquetteMail = new JLabel("Mail: ");
-        password = new JLabel("Mot de passe: ");
-        nameField = new JTextField(15);
-        emailField = new JTextField(15);
-        passwordField = new JTextField(15);
-        fieldPanel.add(name);
-        fieldPanel.add(nameField);
-        fieldPanel.add(email);
-        fieldPanel.add(emailField);
-        fieldPanel.add(password);
-        fieldPanel.add(passwordField);
+        etiquette = new JLabel("Page de connexion");
+        etiquetteMail = new JLabel("Adresse mail :");
+        etiquettePassword = new JLabel("Mot de passe : ");
+        champMail = new JTextField("", 10);
+        champPassword = new JTextField("", 10);
+        boutonConnexion = new JButton("Connexion");
+        boutonQuitter = new JButton("Quitter");
+        fieldPanel.add(etiquette);
+        fieldPanel.add(etiquetteMail);
+        fieldPanel.add(etiquettePassword);
+        fieldPanel.add(champMail);
+        fieldPanel.add(champPassword);
+        fieldPanel.add(champPassword);
 
         // mainPanel et ses composants
         mainPanel = new JPanel();
