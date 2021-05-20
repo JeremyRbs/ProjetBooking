@@ -9,6 +9,10 @@ package projetbooking.Vue;
  *
  * @author jerem
  */
-public class FenetrePlanning {
+public class FenetrePlanning extends Fenetre {
+
+    public FenetrePlanning(String titre) {
+        super(titre);
+    }
 
 }

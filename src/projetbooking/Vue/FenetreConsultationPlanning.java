@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Cette page permet de consulter le planning avec les dates réservées. Elle utilise comme base la classe Fenetre.
  */
 package projetbooking.Vue;
 
@@ -9,6 +7,11 @@ package projetbooking.Vue;
  *
  * @author jerem
  */
-public class FenetreConsultationPlanning {
+public class FenetreConsultationPlanning extends Fenetre {
+
+    // Constructeur de la classe
+    public FenetreConsultationPlanning(String titre) {
+        super(titre);
+    }
 
 }

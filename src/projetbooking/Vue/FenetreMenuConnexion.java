@@ -1,29 +1,37 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Cette page permet à un utilisateur de se connecter. Elle utilise comme base la page FenetreMenu.
  */
 package projetbooking.Vue;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author jerem
  */
-public class FenetreMenuConnexion extends FenetreMenu {
+public class FenetreMenuConnexion extends Fenetre {
 
+    // Déclarations des champs privés
+    JFrame frame;
+    JPanel fieldPanel, mainPanel;
     private final JButton boutonConnexion = new JButton("Connexion");
     private final JButton boutonQuitter = new JButton("Quitter");
     private final JLabel etiquette = new JLabel("Page de connexion");
@@ -31,14 +39,63 @@ public class FenetreMenuConnexion extends FenetreMenu {
     private final JLabel etiquettePassword = new JLabel("Mot de passe : ");
     private final JTextField champMail = new JTextField("", 10);
     private final JTextField champPassword = new JTextField("", 10);
-    private final JPanel panneau = new JPanel();
-    private final JPanel panneauCentral = new JPanel(new GridBagLayout());
 
-    /**
-     * Constructeur de la vue
-     */
+    // Constructeur de la classe
     public FenetreMenuConnexion(String titre) {
-       super(titre);
+        super(titre);
+        frame = new JFrame("Booking - Se connecter");
+
+        // fieldPanel et ses composants
+        fieldPanel = new JPanel();
+        fieldPanel.setLayout(new GridLayout(5,2,3,3));
+        fieldPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
+        etiquetteMail = new JLabel("Mail: ");
+        password = new JLabel("Mot de passe: ");
+        nameField = new JTextField(15);
+        emailField = new JTextField(15);
+        passwordField = new JTextField(15);
+        fieldPanel.add(name);
+        fieldPanel.add(nameField);
+        fieldPanel.add(email);
+        fieldPanel.add(emailField);
+        fieldPanel.add(password);
+        fieldPanel.add(passwordField);
+
+        // mainPanel et ses composants
+        mainPanel = new JPanel();
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        Font font = new Font("MS Sans Serif", Font.BOLD, 18);
+        label_creer = new JLabel("Créer un nouveau compte");
+        label_creer.setFont(font);
+        label_creer.setAlignmentX(Component.CENTER_ALIGNMENT);
+        bouton_creer = new JButton("Créer");
+        bouton_creer.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mainPanel.add(label_creer);
+        mainPanel.add(fieldPanel);
+        mainPanel.add(bouton_creer);
+
+        // Paramétrages finaux
+        frame.setContentPane(mainPanel);
+        frame.pack();
+        centerFrame();
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    // Méthode permettant d'effectuer des actions suite à des évènements
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.bouton_creer){
+               
+            SwingUtilities.invokeLater(() -> {
+                
+                FenetrePlanning fenetre = new FenetrePlanning("Booking");
+                fenetre.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                fenetre.setVisible(true);
+                
+            });
+        }
     }
 
     /**

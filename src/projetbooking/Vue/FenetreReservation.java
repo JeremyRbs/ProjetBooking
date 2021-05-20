@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Cette page permet d'effectuer des réservations sur le planning. Elle utilise comme base la classe Fenetre.
  */
 package projetbooking.Vue;
 
@@ -9,6 +7,10 @@ package projetbooking.Vue;
  *
  * @author jerem
  */
-public class FenetreReservation {
+public class FenetreReservation extends Fenetre {
+
+    public FenetreReservation(String titre) {
+        super(titre);
+    }
 
 }

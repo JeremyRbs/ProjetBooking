@@ -1,3 +1,6 @@
+/*
+ * Cette page permet de créer un compte utilisateur de l'application. Elle utilise comme base la classe FenetreMenu.
+*/
 package projetbooking.Vue;
 
 import javax.swing.*;
@@ -5,19 +8,24 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
 
-public class FenetreCreationCompte {
+public class FenetreCreationCompte extends Fenetre {
 
+    // Déclarations des champs privés
     JFrame frame;
     JPanel fieldPanel, mainPanel;
     JLabel name, email, password, label_creer;
     JTextField nameField, emailField, passwordField, countryCode;
     JButton bouton_creer;
 
-    public FenetreCreationCompte()
+    // Constructeur de la classe
+    public FenetreCreationCompte(String titre)
     {
+        
+        // Récupération du titre
+        super(titre);
         frame = new JFrame("Booking - Créer un compte");
 
-        //fieldPanel and its components
+        // fieldPanel et ses composants
         fieldPanel = new JPanel();
         fieldPanel.setLayout(new GridLayout(5,2,3,3));
         fieldPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
@@ -34,7 +42,7 @@ public class FenetreCreationCompte {
         fieldPanel.add(password);
         fieldPanel.add(passwordField);
 
-        //mainPanel and its components
+        // mainPanel et ses composants
         mainPanel = new JPanel();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -48,7 +56,7 @@ public class FenetreCreationCompte {
         mainPanel.add(fieldPanel);
         mainPanel.add(bouton_creer);
 
-        //final frame settings
+        // Paramétrages finaux
         frame.setContentPane(mainPanel);
         frame.pack();
         centerFrame();
@@ -56,11 +64,18 @@ public class FenetreCreationCompte {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    public void centerFrame() {
-        Dimension currentScreen = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((currentScreen.getWidth() - frame.getWidth()) / 2);
-        int y = (int) ((currentScreen.getHeight() - frame.getHeight()) / 2);
-        frame.setLocation(x, y);
+    
+    // Méthode permettant d'effectuer des actions suite à des évènements
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.bouton_creer){
+               
+            SwingUtilities.invokeLater(() -> {
+                
+                FenetrePlanning fenetre = new FenetrePlanning("Booking");
+                fenetre.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                fenetre.setVisible(true);
+                
+            });
+        }
     }
 }

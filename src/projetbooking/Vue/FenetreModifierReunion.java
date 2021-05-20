@@ -9,6 +9,10 @@ package projetbooking.Vue;
  *
  * @author jerem
  */
-public class FenetreModifierReunion {
+public class FenetreModifierReunion extends Fenetre {
+
+    public FenetreModifierReunion(String titre) {
+        super(titre);
+    }
 
 }
