@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import projetbooking.Vue.FenetreCreationCompte;
 
 public class Fenetre extends JFrame implements ActionListener {
 
@@ -121,6 +120,7 @@ public class Fenetre extends JFrame implements ActionListener {
         
         System.out.println(e.getActionCommand());
         switch (e.getActionCommand()){
+            
         }
         // Si le bouton créer est cliqué
         if(e.getSource() == this.bouton_creer_panneau){

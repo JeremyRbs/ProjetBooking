@@ -5,13 +5,9 @@
  */
 package projetbooking.Controller;
 
-import projetbooking.Vue.FenetreMenu;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import projetbooking.Vue.Fenetre;
-import projetbooking.Vue.FenetreCreationCompte;
-import projetbooking.Vue.FenetreMenuConnexion;
 
 /**
  *
@@ -25,7 +21,8 @@ public class ProjetBooking {
     public static void main(String[] args) {
         
         SwingUtilities.invokeLater(() -> {
-            FenetreMenu fenetre = new FenetreMenu("Booking");
+            Fenetre fenetre;
+            fenetre = new Fenetre();
             fenetre.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             fenetre.setVisible(true);
         });
