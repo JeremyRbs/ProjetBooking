@@ -1,0 +1,280 @@
+package projetbooking.Vue;
+ 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import static java.awt.FlowLayout.*;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+ 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Cal extends JFrame {
+    
+    /// Panneau principal de planning ///
+    JPanel sp = new JPanel(new GridLayout(3,3));
+    
+    /// Partie titre ///
+    private JLabel title_planning = new JLabel("CONSULTATION");
+    
+    // Partie utilisateur
+    private JLabel username_planning = new JLabel("Hubert");
+    private JButton deconnection_planning = new JButton("Déconnexion");
+
+    /// Partie calendrier ///
+    protected int yy_planning; // année courante
+    protected int mm_planning, dd_planning; // mois et jours courants
+    protected JButton labs_planning[][];   // boutons du planning
+    protected int leadGap_planning = 0;    // nombre de jours à laisser en carrés vides
+    Calendar calendar_planning = new GregorianCalendar();  // objet Calendrier
+    protected final int thisYear_planning = calendar_planning.get(Calendar.YEAR);   // année actuelle
+    protected final int thisMonth_planning = calendar_planning.get(Calendar.MONTH); // mois actuel
+    private JButton b0_planning;   // un des boutons pour garder la référence du getBackground();
+    private JComboBox monthChoice_planning;    // le mois sémectionné
+    private JComboBox yearChoice_planning; // l'année sélectionnée
+ 
+  /**
+   * Constructeur de Cal
+   */
+  public Cal() {
+      
+    super();
+    this.setYYMMDD(calendar_planning.get(Calendar.YEAR), calendar_planning.get(Calendar.MONTH),calendar_planning.get(Calendar.DAY_OF_MONTH));
+    this.getAccessibleContext().setAccessibleDescription("Le calendrier n'est pas accessible maintenant. Désolé !");
+    this.setBackground(Color.red);
+    this.setLayout(new BorderLayout());
+    
+    // Ajout du titre
+    sp.add(title_planning);
+    
+    // Ajout de la partie utilisateur
+    sp.add(this.username_planning);
+    this.username_planning.setForeground(new Color(100,149,237));
+    sp.add(this.deconnection_planning);
+ 
+    // Panneau pour sélectionner le mois et l'année
+    JPanel tp = new JPanel();
+    tp.add(monthChoice_planning = new JComboBox());
+    
+    for (int i = 0; i < months.length; i++) monthChoice_planning.addItem(months[i]);
+    
+    monthChoice_planning.setSelectedItem(months[mm_planning]);
+    monthChoice_planning.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent ae) {
+          int i = monthChoice_planning.getSelectedIndex();
+          if (i >= 0) {
+            mm_planning = i;
+            recompute();
+          }
+        }
+    });
+    
+    monthChoice_planning.getAccessibleContext().setAccessibleName("Mois");
+    monthChoice_planning.getAccessibleContext().setAccessibleDescription("Choisissez un mois dans l'année");
+ 
+    tp.add(yearChoice_planning = new JComboBox());
+    yearChoice_planning.setEditable(true);
+    
+    for (int i = yy_planning - 5; i < yy_planning + 5; i++){
+      yearChoice_planning.addItem(Integer.toString(i));
+    }
+    
+    yearChoice_planning.setSelectedItem(Integer.toString(yy_planning));
+    yearChoice_planning.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent ae){
+            int i = yearChoice_planning.getSelectedIndex();
+            if (i >= 0){
+              yy_planning = Integer.parseInt(yearChoice_planning.getSelectedItem().toString());
+              recompute();
+            }
+        }
+    });
+    
+    add(BorderLayout.CENTER, tp);
+ 
+    // Panneau pour sélectionner les jours
+    JPanel bp = new JPanel();
+    bp.setAlignmentX(LEFT);
+    bp.setLayout(new GridLayout(7, 7));
+    labs_planning = new JButton[6][7]; // La première ligne représente les jours
+ 
+    bp.add(b0_planning = new JButton("D"));
+    bp.add(new JButton("L"));
+    bp.add(new JButton("M"));
+    bp.add(new JButton("MC"));
+    bp.add(new JButton("J"));
+    bp.add(new JButton("V"));
+    bp.add(new JButton("S"));
+ 
+    ActionListener dateSetter = new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        String num = e.getActionCommand();
+        if (!num.equals("")) {
+          // Envoi du jour sélectionné
+          setDayActive(Integer.parseInt(num));
+        }
+      }
+    };
+ 
+    // Création et ajout des bouttons
+    for (int i = 0; i < 6; i++){
+      for (int j = 0; j < 7; j++) {
+        bp.add(labs_planning[i][j] = new JButton(""));
+        labs_planning[i][j].addActionListener(dateSetter);
+      }
+    }
+ 
+    add(BorderLayout.SOUTH, bp);
+    recompute();
+    
+    this.setTitle("Booking");
+    this.add(sp);
+    sp.add(tp);
+    sp.add(bp);
+    tp.setLayout(new FlowLayout());
+    this.pack();
+    this.centerFrame();
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setVisible(true);
+    
+  }
+  
+    // Méthode permettant de centrer la fenêtre
+    public void centerFrame() {
+        Dimension currentScreen = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((currentScreen.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((currentScreen.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x, y);
+    }
+ 
+    private void setYYMMDD(int year, int month, int today) {
+      yy_planning = year;
+      mm_planning = month;
+      dd_planning = today;
+    }
+ 
+    String[] months = { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" };
+ 
+    public final static int dom[] = { 31, 28, 31, 30, /* jan fev mar avr */
+    31, 30, 31, 31, /* mai jui juil aou */
+    30, 31, 30, 31 /* sep oct nov dec */
+    };
+ 
+    /** Compute which days to put where, in the Cal panel */
+    protected void recompute() {
+
+      // System.out.println("Cal::recompute: " + yy + ":" + mm + ":" + dd);
+      if (mm_planning < 0 || mm_planning > 11){
+        throw new IllegalArgumentException("Month " + mm_planning + " bad, must be 0-11");
+      }
+
+      clearDayActive();
+      calendar_planning = new GregorianCalendar(yy_planning, mm_planning, dd_planning);
+
+      // Compute how much to leave before the first.
+      // getDay() returns 0 for Sunday, which is just right.
+      leadGap_planning = new GregorianCalendar(yy_planning, mm_planning, 1).get(Calendar.DAY_OF_WEEK) - 1;
+      // System.out.println("leadGap = " + leadGap);
+
+      int daysInMonth = dom[mm_planning];
+      if (isLeap(calendar_planning.get(Calendar.YEAR)) && mm_planning > 1){
+        ++daysInMonth;
+      }
+
+      // Vide les étiquettes avant le 1er jour du mois
+      for (int i = 0; i < leadGap_planning; i++) {
+        labs_planning[0][i].setText("");
+      }
+
+      // Remplissage des chiffres pour le jour du mois
+      for (int i = 1; i <= daysInMonth; i++) {
+        JButton b = labs_planning[(leadGap_planning + i - 1) / 7][(leadGap_planning + i - 1) % 7];
+        b.setText(Integer.toString(i));
+      }
+
+      // 7 jours/semaine sur 6 lignes
+      for (int i = leadGap_planning + 1 + daysInMonth; i < 6 * 7; i++) {
+        labs_planning[(i) / 7][(i) % 7].setText("");
+      }
+
+      // Colories le jour seulement si c'est dans le mois affiché
+      if (thisYear_planning == yy_planning && mm_planning == thisMonth_planning){
+        setDayActive(dd_planning); // Colories la case pour le jour
+      }
+
+      // La case doit être redessinée sur l'écran
+      repaint();
+      
+    }
+ 
+    /**
+     * isLeap() returns true si l'année sélectionnée est bissextile.
+     *
+     * "une année est bissextile si elle est divisible par 4 mais pas par 100, sauf
+     * si elle est divisible par 400"
+     */
+    public boolean isLeap(int year) {
+      if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0){
+        return true;
+      }
+      return false;
+    }
+ 
+    // Envoi du jour, du mois et de l'année
+    public void setDate(int yy, int mm, int dd) {
+
+      this.yy_planning = yy;
+      this.mm_planning = mm; // Début à 0, comme Date
+      this.dd_planning = dd;
+      recompute();
+    }
+ 
+    // Désactiver tout jour précédemment mis en surbrillance
+    private void clearDayActive() {
+      JButton b;
+
+      // First un-shade the previously-selected square, if any
+      if (activeDay > 0) {
+        b = labs_planning[(leadGap_planning + activeDay - 1) / 7][(leadGap_planning + activeDay - 1) % 7];
+        b.setBackground(b0_planning.getBackground());
+        b.repaint();
+        activeDay = -1;
+      }
+    }
+ 
+    private int activeDay = -1;
+ 
+    // Envoi du jour dans le mois courant
+    public void setDayActive(int newDay) {
+
+      clearDayActive();
+
+      // Envoi du nouveau jour
+      if (newDay <= 0){
+        dd_planning = new GregorianCalendar().get(Calendar.DAY_OF_MONTH);
+      }else{
+        dd_planning = newDay;
+      }
+
+      // Met en couleur le carré sélectionné
+      Component square = labs_planning[(leadGap_planning + newDay - 1) / 7][(leadGap_planning + newDay - 1) % 7];
+      square.setBackground(Color.red);
+      square.repaint();
+      activeDay = newDay;
+
+    }
+
+}
