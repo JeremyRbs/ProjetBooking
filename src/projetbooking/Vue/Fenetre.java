@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Statement;
+import static projetbooking.Controller.JDBC_Connect.*;
+import static projetbooking.Controller.Requetes.*;
 
 public class Fenetre extends JFrame implements ActionListener {
 
@@ -33,8 +37,8 @@ public class Fenetre extends JFrame implements ActionListener {
     
     /////// Panneau de création de compte ///////
     private JPanel phonePanel_creationAccountPanel, fieldPanel_creationAccountPanel, creationAccountPanel;
-    private JLabel name_creationAccountPanel, email_creationAccountPanel, password_creationAccountPanel, address_creationAccountPanel, mobile_creationAccountPanel, l_register_creationAccountPanel;
-    private JTextField nameField_creationAccountPanel, emailField_creationAccountPanel, passwordField_creationAccountPanel, addressField_creationAccountPanel, mobileField_creationAccountPanel, countryCode_creationAccountPanel;
+    private JLabel name_creationAccountPanel, firstName_creationAccountPanel, email_creationAccountPanel, password_creationAccountPanel, address_creationAccountPanel, mobile_creationAccountPanel, l_register_creationAccountPanel;
+    private JTextField nameField_creationAccountPanel, firstNameField_creationAccountPanel, emailField_creationAccountPanel, passwordField_creationAccountPanel, addressField_creationAccountPanel, mobileField_creationAccountPanel, countryCode_creationAccountPanel;
     private JButton b_register_creationAccountPanel;
     
     /////// Panneau du menu ///////
@@ -90,19 +94,23 @@ public class Fenetre extends JFrame implements ActionListener {
 
         //fieldPanel_creationAccountPanel et ses composants
         fieldPanel_creationAccountPanel = new JPanel();
-        fieldPanel_creationAccountPanel.setLayout(new GridLayout(5,2,3,3));
+        fieldPanel_creationAccountPanel.setLayout(new GridLayout(6,2,3,3));
         fieldPanel_creationAccountPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
         name_creationAccountPanel = new JLabel("Nom : ");
+        firstName_creationAccountPanel = new JLabel("Prénom :");
         email_creationAccountPanel = new JLabel("Email : ");
         password_creationAccountPanel = new JLabel("Mot de passe : ");
         address_creationAccountPanel = new JLabel("Adresse : ");
         mobile_creationAccountPanel = new JLabel("Téléphone : ");
         nameField_creationAccountPanel = new JTextField(15);
+        firstNameField_creationAccountPanel = new JTextField(15);
         emailField_creationAccountPanel = new JTextField(15);
         passwordField_creationAccountPanel = new JTextField(15);
         addressField_creationAccountPanel = new JTextField(15);
         fieldPanel_creationAccountPanel.add(name_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(nameField_creationAccountPanel);
+        fieldPanel_creationAccountPanel.add(firstName_creationAccountPanel);
+        fieldPanel_creationAccountPanel.add(firstNameField_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(email_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(emailField_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(password_creationAccountPanel);
@@ -220,7 +228,18 @@ public class Fenetre extends JFrame implements ActionListener {
                 setPane(this.connectionPanel);
                 break;
             case "Créer un compte":
-                // envoi requête
+                String name = this.nameField_creationAccountPanel.getText();
+                String firstName = this.firstNameField_creationAccountPanel.getText();
+                String email = this.emailField_creationAccountPanel.getText();
+                String password = this.passwordField_creationAccountPanel.getText();
+                String address = this.addressField_creationAccountPanel.getText();
+                String mobile = this.mobileField_creationAccountPanel.getText();
+                Statement statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+                if (statement != null) {
+                    System.out.println("Etat initial");
+                    creerCompte(statement, name, firstName, email, password, 1); //Execution de requête de lecture sur l'objet Statement
+                }
+                
                 // si requête ok
                 // ouverture planning
                 break;

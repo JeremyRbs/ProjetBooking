@@ -44,9 +44,9 @@ public class Requetes {
         }
     }
     
-    public static boolean lot0_1(Statement statement) {
+    public static boolean creerCompte(Statement statement, String name, String firstName, String mail, String password, int level) {
         
-        String createTable = "INSERT INTO `utilisateurs` (`NOM`, `PRENOM`, `MAIL`, `mdp`, `niveau`) VALUES ('MUTH', 'Kévin', 'kevin.muth.auditeur@lecnam.net', '0000', '2')";
+        String createTable = "INSERT INTO `utilisateurs` (`NOM`, `PRENOM`, `MAIL`, `mdp`, `niveau`) VALUES ('" + name + "', '" + firstName + "', '" + mail + "', '" + password + "', '" + level + "')";
 
         if (statement != null) {
             try {
@@ -66,7 +66,7 @@ public class Requetes {
         Statement statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
         if (statement != null) {
             System.out.println("Etat initial");
-            lot0_1(statement); //Execution de requête de lecture sur l'objet Statement
+            //lot0_1(statement); //Execution de requête de lecture sur l'objet Statement
         }
         Connection connection = statement.getConnection();
         statement.close();
