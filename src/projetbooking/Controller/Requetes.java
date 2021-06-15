@@ -21,32 +21,10 @@ public class Requetes {
         }
         return statement;
     }
-
-    public static void lectureBDD(Statement statement) { //Requetes de lecture
-        //Execution d'une requête SQL simple et récupération du resultat dans un objet ResultSet
-        String chaineSQL = "INSERT INTO `utilisateurs` (`NOM`, `PRENOM`, `MAIL`, `mdp`, `niveau`) VALUES ('MUTH', 'Kévin', 'kevin.muth.auditeur@lecnam.net', '0000', '2') ";
-        ResultSet resultatRequete = null;
-        if (statement != null) {
-            try {
-                resultatRequete = statement.executeQuery(chaineSQL);
-                System.out.println(resultatRequete);
-            } catch (SQLException ex) {
-                System.out.println("Erreur d'exécution de la requête : " + ex);
-            }
-        }
-        if (resultatRequete != null){
-            try{
-                resultatRequete.next();
-            }
-            catch (SQLException ex){
-                
-            }
-        }
-    }
     
-    public static boolean creerCompte(Statement statement, String name, String firstName, String mail, String password, int level) {
+    public static boolean createAccount(Statement statement, String name, String firstName, String mail, String password) {
         
-        String createTable = "INSERT INTO `utilisateurs` (`NOM`, `PRENOM`, `MAIL`, `mdp`, `niveau`) VALUES ('" + name + "', '" + firstName + "', '" + mail + "', '" + password + "', '" + level + "')";
+        String createTable = "INSERT INTO `utilisateurs` (`NOM`, `PRENOM`, `MAIL`, `mdp`, `niveau`) VALUES ('" + name + "', '" + firstName + "', '" + mail + "', '" + password + "', '1')";
 
         if (statement != null) {
             try {
@@ -58,20 +36,18 @@ public class Requetes {
         return true;
     }
     
-        /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws SQLException {
+    public static boolean connectAccount(Statement statement, String mail, String password) {
+        
+        String connectTable = "SELECT `MAIL` FROM `utilisateurs` WHERE utilisateurs.MAIL = '" + mail + "' AND utilisateurs.mdp = '" + password + "'";
 
-        Statement statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
         if (statement != null) {
-            System.out.println("Etat initial");
-            //lot0_1(statement); //Execution de requête de lecture sur l'objet Statement
+            try {
+                return statement.execute(connectTable);
+            } catch (SQLException ex) {
+                System.out.println("Erreur de création de la base de donnée " + ex);
+            }
         }
-        Connection connection = statement.getConnection();
-        statement.close();
-        connection.close();
-
+        return true;
     }
 
 }

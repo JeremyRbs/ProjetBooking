@@ -18,27 +18,34 @@ public class Fenetre extends JFrame implements ActionListener {
     ///////////// Déclarations et initialisations des panneaux /////////////
     ////////////////////////////////////////////////////////////////////////
     
+    /////// Connexion BDD ///////
+    private Statement statement = connexion();
+    
     /////// Bouton quitter pour fermer l'application ///////
     private JButton quitButton = new JButton("Quitter");
     
     /////// Panneau courant ///////
     private JPanel currentPanel = null;
     
+    /////// Image de panneau ///////
+    Image imageDeFond = Toolkit.getDefaultToolkit().getImage("background.PNG"); // récupère l'image
+    
     /////// Panneau de démarrage ///////
     private JPanel startPanel;
+    private JLabel labelBooking = new JLabel("BOOKING");
     private JButton b_creation_startPanel;
     private JButton b_register_startPanel;
     
     /////// Panneau de connexion de compte ///////
     private JPanel fieldPanel_connectionPanel, connectionPanel;
-    private JLabel name_connectionPanel, password_connectionPanel, l_register_connectionPanel;
-    private JTextField nameField_connectionPanel, passwordField_connectionPanel;
+    private JLabel email_connectionPanel, password_connectionPanel, l_register_connectionPanel;
+    private JTextField emailField_connectionPanel, passwordField_connectionPanel;
     private JButton b_register_connectionPanel;
     
     /////// Panneau de création de compte ///////
     private JPanel phonePanel_creationAccountPanel, fieldPanel_creationAccountPanel, creationAccountPanel;
-    private JLabel name_creationAccountPanel, firstName_creationAccountPanel, email_creationAccountPanel, password_creationAccountPanel, address_creationAccountPanel, mobile_creationAccountPanel, l_register_creationAccountPanel;
-    private JTextField nameField_creationAccountPanel, firstNameField_creationAccountPanel, emailField_creationAccountPanel, passwordField_creationAccountPanel, addressField_creationAccountPanel, mobileField_creationAccountPanel, countryCode_creationAccountPanel;
+    private JLabel name_creationAccountPanel, firstName_creationAccountPanel, email_creationAccountPanel, password_creationAccountPanel, mobile_creationAccountPanel, l_register_creationAccountPanel;
+    private JTextField nameField_creationAccountPanel, firstNameField_creationAccountPanel, emailField_creationAccountPanel, passwordField_creationAccountPanel, mobileField_creationAccountPanel, countryCode_creationAccountPanel;
     private JButton b_register_creationAccountPanel;
     
     /////// Panneau du menu ///////
@@ -64,18 +71,15 @@ public class Fenetre extends JFrame implements ActionListener {
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
         
         b_creation_startPanel = new JButton("Se créer un compte");
-        b_creation_startPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b_creation_startPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
-        
         b_register_startPanel = new JButton("Se connecter");
-        b_register_startPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b_register_startPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
         
         b_creation_startPanel.addActionListener(this);
         b_register_startPanel.addActionListener(this);
+        quitButton.addActionListener(this);
         
         startPanel.add(b_creation_startPanel);
         startPanel.add(b_register_startPanel);
+        startPanel.add(quitButton);
         this.setPane(this.startPanel);
         
         /////////////////////////////////////////////
@@ -94,19 +98,17 @@ public class Fenetre extends JFrame implements ActionListener {
 
         //fieldPanel_creationAccountPanel et ses composants
         fieldPanel_creationAccountPanel = new JPanel();
-        fieldPanel_creationAccountPanel.setLayout(new GridLayout(6,2,3,3));
+        fieldPanel_creationAccountPanel.setLayout(new GridLayout(5,2,3,3));
         fieldPanel_creationAccountPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
         name_creationAccountPanel = new JLabel("Nom : ");
         firstName_creationAccountPanel = new JLabel("Prénom :");
         email_creationAccountPanel = new JLabel("Email : ");
         password_creationAccountPanel = new JLabel("Mot de passe : ");
-        address_creationAccountPanel = new JLabel("Adresse : ");
         mobile_creationAccountPanel = new JLabel("Téléphone : ");
         nameField_creationAccountPanel = new JTextField(15);
         firstNameField_creationAccountPanel = new JTextField(15);
         emailField_creationAccountPanel = new JTextField(15);
         passwordField_creationAccountPanel = new JTextField(15);
-        addressField_creationAccountPanel = new JTextField(15);
         fieldPanel_creationAccountPanel.add(name_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(nameField_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(firstName_creationAccountPanel);
@@ -115,8 +117,6 @@ public class Fenetre extends JFrame implements ActionListener {
         fieldPanel_creationAccountPanel.add(emailField_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(password_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(passwordField_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(address_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(addressField_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(mobile_creationAccountPanel);
         fieldPanel_creationAccountPanel.add(phonePanel_creationAccountPanel);
 
@@ -147,12 +147,12 @@ public class Fenetre extends JFrame implements ActionListener {
         fieldPanel_connectionPanel = new JPanel();
         fieldPanel_connectionPanel.setLayout(new GridLayout(5,2,3,3));
         fieldPanel_connectionPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
-        name_connectionPanel = new JLabel("Nom : ");
+        email_connectionPanel = new JLabel("Mail : ");
         password_connectionPanel = new JLabel("Mot de passe : ");
-        nameField_connectionPanel = new JTextField(15);
+        emailField_connectionPanel = new JTextField(15);
         passwordField_connectionPanel = new JTextField(15);
-        fieldPanel_connectionPanel.add(name_connectionPanel);
-        fieldPanel_connectionPanel.add(nameField_connectionPanel);
+        fieldPanel_connectionPanel.add(email_connectionPanel);
+        fieldPanel_connectionPanel.add(emailField_connectionPanel);
         fieldPanel_connectionPanel.add(password_connectionPanel);
         fieldPanel_connectionPanel.add(passwordField_connectionPanel);
 
@@ -178,12 +178,12 @@ public class Fenetre extends JFrame implements ActionListener {
         ////////////////////////////////////////
         /////// Paramètres de la fenêtre ///////
         ////////////////////////////////////////
-
+        
         this.setTitle("Booking");
         this.setVisible(true);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.centerFrame();
     }
 
@@ -207,14 +207,11 @@ public class Fenetre extends JFrame implements ActionListener {
             this.repaint();
             
         }
-        System.out.println(pane.getAccessibleContext());
-        System.out.println(pane);
         this.getContentPane().add(pane);
         this.setContentPane(pane);
         this.validate();
         this.currentPanel = pane;
         this.repaint();
-        this.pack();
     }
 
     @Override
@@ -228,25 +225,25 @@ public class Fenetre extends JFrame implements ActionListener {
                 setPane(this.connectionPanel);
                 break;
             case "Créer un compte":
-                String name = this.nameField_creationAccountPanel.getText();
-                String firstName = this.firstNameField_creationAccountPanel.getText();
-                String email = this.emailField_creationAccountPanel.getText();
-                String password = this.passwordField_creationAccountPanel.getText();
-                String address = this.addressField_creationAccountPanel.getText();
                 String mobile = this.mobileField_creationAccountPanel.getText();
-                Statement statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+                this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
                 if (statement != null) {
-                    System.out.println("Etat initial");
-                    creerCompte(statement, name, firstName, email, password, 1); //Execution de requête de lecture sur l'objet Statement
+                    //Execution de requête de lecture sur l'objet Statement
+                    if (createAccount(statement, this.nameField_creationAccountPanel.getText(), this.firstNameField_creationAccountPanel.getText(), this.emailField_creationAccountPanel.getText(), this.passwordField_creationAccountPanel.getText()) == false ){
+                        //setPane();
+                    }
                 }
-                
-                // si requête ok
-                // ouverture planning
                 break;
             case "Connexion":
-                // envoi requête
-                // si requête ok
-                // ouverture planning
+                this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+                if (this.statement != null) {
+                    //Execution de requête de lecture sur l'objet Statement
+                    System.out.println(this.emailField_connectionPanel.getText());
+                    System.out.println(this.passwordField_connectionPanel.getText());
+                    if (connectAccount(this.statement, this.emailField_connectionPanel.getText(), this.passwordField_connectionPanel.getText()) == false ){
+                        System.exit(0);
+                    }
+                }
                 break;
             case "Quitter":
                 System.exit(0);

@@ -3,7 +3,6 @@ package projetbooking.Vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import static java.awt.FlowLayout.*;
@@ -20,11 +19,21 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class Cal extends JFrame {
     
     /// Panneau principal de planning ///
-    JPanel sp = new JPanel(new GridLayout(3,3));
+    JPanel beginPanel_planning = new JPanel(new BorderLayout(10, 20));    // Begin Panel : panneau contenant tous les panneaux
+    JPanel northPanel_planning = new JPanel(new BorderLayout());    // North Panel
+    JPanel northPanel_east_planning = new JPanel(new FlowLayout(FlowLayout.RIGHT, 22, 25)); // North Panel East
+    JPanel westPanel_planning = new JPanel(new GridLayout(3,1)); // West Panel
+    JPanel westPanel_title_planning = new JPanel();  // West Panel Title
+    JPanel westPanel_planning_planning = new JPanel();   // West Panel Planning
+    JPanel centerPanel_planning = new JPanel();   // Center Panel
+    JPanel eastPanel_planning = new JPanel(new BorderLayout());   // East Panel
+    JPanel southPanel_planning = new JPanel(new BorderLayout());   // South Panel
     
     /// Partie titre ///
     private JLabel title_planning = new JLabel("CONSULTATION");
@@ -53,25 +62,31 @@ public class Cal extends JFrame {
     super();
     this.setYYMMDD(calendar_planning.get(Calendar.YEAR), calendar_planning.get(Calendar.MONTH),calendar_planning.get(Calendar.DAY_OF_MONTH));
     this.getAccessibleContext().setAccessibleDescription("Le calendrier n'est pas accessible maintenant. Désolé !");
-    this.setBackground(Color.red);
-    this.setLayout(new BorderLayout());
     
-    // Ajout du titre
-    sp.add(title_planning);
+    // North Panel
     
-    // Ajout de la partie utilisateur
-    sp.add(this.username_planning);
+    this.beginPanel_planning.add(this.northPanel_planning, BorderLayout.NORTH);
+
+    this.title_planning.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
     this.username_planning.setForeground(new Color(100,149,237));
-    sp.add(this.deconnection_planning);
+    
+    this.northPanel_planning.add(this.title_planning, BorderLayout.WEST);
+    this.northPanel_east_planning.add(this.username_planning);
+    this.northPanel_east_planning.add(this.deconnection_planning);
+    this.northPanel_planning.add(this.northPanel_east_planning);
  
+    // West Panel
+    
+    this.beginPanel_planning.add(this.westPanel_planning, BorderLayout.WEST);
+    
     // Panneau pour sélectionner le mois et l'année
-    JPanel tp = new JPanel();
-    tp.add(monthChoice_planning = new JComboBox());
+    this.westPanel_title_planning.add(monthChoice_planning = new JComboBox());
     
     for (int i = 0; i < months.length; i++) monthChoice_planning.addItem(months[i]);
     
     monthChoice_planning.setSelectedItem(months[mm_planning]);
     monthChoice_planning.addActionListener(new ActionListener() {
+        
         public void actionPerformed(ActionEvent ae) {
           int i = monthChoice_planning.getSelectedIndex();
           if (i >= 0) {
@@ -79,12 +94,13 @@ public class Cal extends JFrame {
             recompute();
           }
         }
+        
     });
     
     monthChoice_planning.getAccessibleContext().setAccessibleName("Mois");
     monthChoice_planning.getAccessibleContext().setAccessibleDescription("Choisissez un mois dans l'année");
  
-    tp.add(yearChoice_planning = new JComboBox());
+    this.westPanel_title_planning.add(yearChoice_planning = new JComboBox());
     yearChoice_planning.setEditable(true);
     
     for (int i = yy_planning - 5; i < yy_planning + 5; i++){
@@ -102,21 +118,21 @@ public class Cal extends JFrame {
         }
     });
     
-    add(BorderLayout.CENTER, tp);
+    add(BorderLayout.CENTER, this.westPanel_title_planning);
+    this.westPanel_planning.add(this.westPanel_title_planning);
  
     // Panneau pour sélectionner les jours
-    JPanel bp = new JPanel();
-    bp.setAlignmentX(LEFT);
-    bp.setLayout(new GridLayout(7, 7));
+    this.westPanel_planning.setAlignmentX(LEFT);
+    this.westPanel_planning.setLayout(new GridLayout(7, 7));
     labs_planning = new JButton[6][7]; // La première ligne représente les jours
  
-    bp.add(b0_planning = new JButton("D"));
-    bp.add(new JButton("L"));
-    bp.add(new JButton("M"));
-    bp.add(new JButton("MC"));
-    bp.add(new JButton("J"));
-    bp.add(new JButton("V"));
-    bp.add(new JButton("S"));
+    this.westPanel_planning.add(b0_planning = new JButton("D"));
+    this.westPanel_planning.add(new JButton("L"));
+    this.westPanel_planning.add(new JButton("M"));
+    this.westPanel_planning.add(new JButton("MC"));
+    this.westPanel_planning.add(new JButton("J"));
+    this.westPanel_planning.add(new JButton("V"));
+    this.westPanel_planning.add(new JButton("S"));
  
     ActionListener dateSetter = new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -131,20 +147,54 @@ public class Cal extends JFrame {
     // Création et ajout des bouttons
     for (int i = 0; i < 6; i++){
       for (int j = 0; j < 7; j++) {
-        bp.add(labs_planning[i][j] = new JButton(""));
+        this.westPanel_planning.add(labs_planning[i][j] = new JButton(""));
         labs_planning[i][j].addActionListener(dateSetter);
       }
     }
- 
-    add(BorderLayout.SOUTH, bp);
-    recompute();
     
+    recompute();
+    this.westPanel_planning.add(this.westPanel_planning);
+    
+    // Center Panel
+    this.beginPanel_planning.add(this.centerPanel_planning, BorderLayout.CENTER);
+    
+    // East Panel
+    
+    // Data to be displayed in the JTable
+    String[][] data = {
+        { "8h", "-------" },
+        { "9h", "-------" },
+        { "10h", "-------" },
+        { "11h", "-------" },
+        { "12h", "-------" },
+        { "13h", "-------" },
+        { "14h", "-------" },
+        { "15h", "-------" },
+        { "16h", "-------" },
+        { "17h", "-------" },
+        { "18h", "-------" },
+        { "19h", "-------" },
+    };
+
+    // Column Names
+    String[] columnNames = { "Heures", "Rendez-vous" };
+
+    // Initializing the JTable
+    JTable agenda = new JTable(data, columnNames);
+
+    // adding it to JScrollPane
+    JScrollPane sp = new JScrollPane(agenda);
+    this.beginPanel_planning.add(sp, BorderLayout.EAST);
+    
+    // South Panel
+    JButton buttonSouth = new JButton("ok");
+    this.southPanel_planning.add(buttonSouth);
+    this.beginPanel_planning.add(this.southPanel_planning, BorderLayout.SOUTH);
+    
+    // Fenêtre
+    this.add(this.beginPanel_planning);
     this.setTitle("Booking");
-    this.add(sp);
-    sp.add(tp);
-    sp.add(bp);
-    tp.setLayout(new FlowLayout());
-    this.pack();
+    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     this.centerFrame();
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
