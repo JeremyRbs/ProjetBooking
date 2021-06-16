@@ -1,18 +1,16 @@
 /*
  * Cette page Fenetre permet de créer une fenêtre simple.
 */
-package projetbooking.Vue;
+package projetbooking.Controller;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.sql.Statement;
-import static projetbooking.Controller.JDBC_Connect.*;
-import static projetbooking.Controller.Requetes.*;
+import static BDD.Requetes.*;
 
-public class Fenetre extends JFrame implements ActionListener {
+public class Vue extends JFrame implements ActionListener {
 
     ////////////////////////////////////////////////////////////////////////
     ///////////// Déclarations et initialisations des panneaux /////////////
@@ -49,13 +47,13 @@ public class Fenetre extends JFrame implements ActionListener {
     private JButton b_register_creationAccountPanel;
     
     /////// Panneau du menu ///////
-    private JPanel planningButton = new JPanel(new BorderLayout());
+    private JPanel planningPanel = new JPanel(new BorderLayout());
 
     ////////////////////////////////////////////////////////////////////////
     ////////////////// Constructeur de la classe Fenetre ///////////////////
     ////////////////////////////////////////////////////////////////////////
     
-    public Fenetre()
+    public Vue()
     {
         
         //////////////////////////////////////////////////
@@ -183,7 +181,7 @@ public class Fenetre extends JFrame implements ActionListener {
         this.setVisible(true);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.centerFrame();
     }
 
@@ -210,6 +208,7 @@ public class Fenetre extends JFrame implements ActionListener {
         this.getContentPane().add(pane);
         this.setContentPane(pane);
         this.validate();
+        this.pack();
         this.currentPanel = pane;
         this.repaint();
     }
@@ -225,12 +224,11 @@ public class Fenetre extends JFrame implements ActionListener {
                 setPane(this.connectionPanel);
                 break;
             case "Créer un compte":
-                String mobile = this.mobileField_creationAccountPanel.getText();
                 this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
                 if (statement != null) {
                     //Execution de requête de lecture sur l'objet Statement
                     if (createAccount(statement, this.nameField_creationAccountPanel.getText(), this.firstNameField_creationAccountPanel.getText(), this.emailField_creationAccountPanel.getText(), this.passwordField_creationAccountPanel.getText()) == false ){
-                        //setPane();
+                        setPane(this.planningPanel);
                     }
                 }
                 break;
@@ -238,10 +236,12 @@ public class Fenetre extends JFrame implements ActionListener {
                 this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
                 if (this.statement != null) {
                     //Execution de requête de lecture sur l'objet Statement
-                    System.out.println(this.emailField_connectionPanel.getText());
-                    System.out.println(this.passwordField_connectionPanel.getText());
-                    if (connectAccount(this.statement, this.emailField_connectionPanel.getText(), this.passwordField_connectionPanel.getText()) == false ){
-                        System.exit(0);
+                    if (connectAccount(statement, this.emailField_connectionPanel.getText(), this.passwordField_connectionPanel.getText()) == 1 ){
+                        setPane(this.planningPanel);
+                    }else if(connectAccount(statement, this.emailField_connectionPanel.getText(), this.passwordField_connectionPanel.getText()) == 2 ){
+                        setPane(this.planningPanel);
+                    }else{
+                        setPane(this.planningPanel);
                     }
                 }
                 break;
@@ -250,4 +250,31 @@ public class Fenetre extends JFrame implements ActionListener {
                 break;
         }
     }
+    
+//    /**
+//     * Ajouter un écouteur à un bouton désigné par son nom
+//     *
+//     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
+//     * @param listener l'écouteur à ajouter
+//     */
+//    public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
+//        JButton bouton;
+//        bouton = switch (nomBouton) {
+//            case "Se créer un compte" ->
+//                bouton = this.b_creation_startPanel;
+//            case "Se connecter" ->
+//                bouton = this.b_register_startPanel;
+//            case "Créer un compte" ->
+//                bouton = this.b_register_creationAccountPanel;
+//            case "Connexion" ->
+//                bouton = this.b_register_creationAccountPanel;
+//            case "Quitter" ->
+//                bouton = this.quitButton;
+//            default ->
+//                null;
+//        };
+//        if (bouton != null) {
+//            bouton.addActionListener(listener);
+//        }
+//    }
 }

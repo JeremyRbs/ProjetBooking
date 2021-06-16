@@ -1,4 +1,4 @@
-package projetbooking.Controller;
+package BDD;
 
 import java.sql.*;
 
@@ -36,18 +36,18 @@ public class Requetes {
         return true;
     }
     
-    public static boolean connectAccount(Statement statement, String mail, String password) {
+    public static int connectAccount(Statement statement, String mail, String password) {
         
-        String connectTable = "SELECT `MAIL` FROM `utilisateurs` WHERE utilisateurs.MAIL = '" + mail + "' AND utilisateurs.mdp = '" + password + "'";
+        String connectTable = "SELECT `niveau` FROM `utilisateurs` WHERE utilisateurs.MAIL = '" + mail + "' AND utilisateurs.mdp = '" + password + "'";
 
         if (statement != null) {
             try {
-                return statement.execute(connectTable);
+                statement.execute(connectTable);
             } catch (SQLException ex) {
                 System.out.println("Erreur de création de la base de donnée " + ex);
             }
         }
-        return true;
+        return 1;
     }
 
 }

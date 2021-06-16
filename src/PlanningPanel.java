@@ -1,4 +1,4 @@
-package projetbooking.Vue;
+
  
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class Cal extends JFrame {
+public class PlanningPanel extends JFrame {
     
     /// Panneau principal de planning ///
     JPanel beginPanel_planning = new JPanel(new BorderLayout(10, 20));    // Begin Panel : panneau contenant tous les panneaux
@@ -57,7 +57,7 @@ public class Cal extends JFrame {
   /**
    * Constructeur de Cal
    */
-  public Cal() {
+  public PlanningPanel() {
       
     super();
     this.setYYMMDD(calendar_planning.get(Calendar.YEAR), calendar_planning.get(Calendar.MONTH),calendar_planning.get(Calendar.DAY_OF_MONTH));
