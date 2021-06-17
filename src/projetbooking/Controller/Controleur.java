@@ -15,10 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import projetbooking.Modele.Modele;
-import projetbooking.Vue.Panel.ConnectionPanel;
-import projetbooking.Vue.Panel.CreationAccountPanel;
+import projetbooking.Vue.Panel.ConnectionPanel.ConnectionPanel;
+import projetbooking.Vue.Panel.ConnectionPanel.CreationAccountPanel;
 import projetbooking.Vue.Vue;
-import projetbooking.Vue.Panel.ConnectionPanel;
+import projetbooking.Vue.Panel.ConnectionPanel.ConnectionPanel;
 
 /**
  * La classe Controleur represente le modèle de l'architecture MVC.
@@ -26,7 +26,7 @@ import projetbooking.Vue.Panel.ConnectionPanel;
  * @author Hervé Martinez
  */
 public class Controleur extends KeyAdapter implements MouseListener, ActionListener {
-    
+
     private final Vue laVue;
     private final Modele leModele;
 
@@ -39,14 +39,34 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
      * @param unModele Le modèle
      */
     public Controleur(Vue uneVue, Modele unModele) {
+        
         this.laVue = uneVue;
         this.leModele = unModele;
+        
+        // StartPanel
         uneVue.ajouterEcouteurBouton("Quitter", this);
         uneVue.ajouterEcouteurBouton("Se créer un compte", this);
         uneVue.ajouterEcouteurBouton("Se connecter", this);
+        
+        // ConnectionPanel
         uneVue.ajouterEcouteurBouton("Connexion", this);
+        
+        // CreationAccountPanel
+        uneVue.ajouterEcouteurBouton("Créer un compte", this);
+        
+        // PlanningPanel
+        uneVue.ajouterEcouteurBouton("Déconnexion", this);
+        uneVue.ajouterEcouteurBouton("Réservation", this);
+        uneVue.ajouterEcouteurBouton("Salle", this);
+        uneVue.ajouterEcouteurBouton("Équipement", this);
+        
+        // BookingPanel
+                
+        // RoomPanel
+
+        // EquipmentPanel
     }
-    
+
     /**
      * Permet de récupérer la Vue
      *
@@ -71,14 +91,38 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
 
         JButton source = (JButton) e.getSource();
         switch (source.getText()) {
+            
+            // StartPanel
             case "Se créer un compte" ->
-                laVue.setPane(new CreationAccountPanel());
+                laVue.activatePanel("creationAccountPanel");
             case "Se connecter" ->
-                laVue.setPane(new ConnectionPanel());
+                laVue.activatePanel("connectionPanel");
             case "Quitter" ->
                 System.exit(0);
+            
+            // ConnectionPanel
             case "Connexion" ->
-                System.exit(0);
+                laVue.activatePanel("planningPanel");
+                
+            // CreationAccountPanel
+            case "Créer un compte" ->
+                laVue.activatePanel("planningPanel");
+                
+            // PlanningPanel
+            case "Déconnexion" ->
+                laVue.activatePanel("startPanel");
+            case "Réservation" ->
+                laVue.activatePanel("bookingPanel");
+            case "Salle" ->
+                laVue.activatePanel("roomPanel");
+            case "Équipement" ->
+                laVue.activatePanel("equipmentPanel");
+                
+            // BookingPanel
+                
+            // RoomPanel
+                
+            // EquipmentPanel
         }
     }
 

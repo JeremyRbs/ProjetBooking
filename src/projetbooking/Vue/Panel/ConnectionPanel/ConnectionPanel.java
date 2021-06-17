@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetbooking.Vue.Panel;
+package projetbooking.Vue.Panel.ConnectionPanel;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -26,7 +26,7 @@ public class ConnectionPanel extends JPanel{
     private JPanel fieldPanel_connectionPanel, connectionPanel;
     private JLabel email_connectionPanel, password_connectionPanel, l_register_connectionPanel;
     private JTextField emailField_connectionPanel, passwordField_connectionPanel;
-    private static JButton b_register_connectionPanel;
+    private JButton b_register_connectionPanel;
     
     public ConnectionPanel(){
         
@@ -91,8 +91,27 @@ public class ConnectionPanel extends JPanel{
         return passwordField_connectionPanel;
     }
 
-    public static JButton getB_register_connectionPanel() {
-        return b_register_connectionPanel;
+    public String getB_register_connectionPanel() {
+        return b_register_connectionPanel.getActionCommand();
+    }
+    
+    /**
+     * Ajouter un écouteur à un bouton désigné par son nom
+     *
+     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
+     * @param listener l'écouteur à ajouter
+     */
+    public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
+        JButton bouton;
+        bouton = switch (nomBouton) {
+            case "Connexion" ->
+                bouton = this.b_register_connectionPanel;
+            default ->
+                null;
+        };
+        if (bouton != null) {
+            bouton.addActionListener(listener);
+        }
     }
     
 }

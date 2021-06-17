@@ -5,7 +5,9 @@
  */
 package projetbooking.Vue.Panel;
 
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,7 +17,7 @@ import javax.swing.JPanel;
  *
  * @author Jerem
  */
-public class StartPanel {
+public class StartPanel extends JPanel {
     
     private JPanel currentPanel;
     private JLabel labelBooking = new JLabel("BOOKING");
@@ -39,6 +41,25 @@ public class StartPanel {
         currentPanel.add(b_creation_startPanel);
         currentPanel.add(b_register_startPanel);
         currentPanel.add(quitButton);
+        Component add = add(this.currentPanel);
+        this.add(add);
+    }
+    
+    public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
+        JButton bouton;
+        bouton = switch (nomBouton) {
+            case "Se créer un compte" ->
+                bouton = this.b_creation_startPanel;
+            case "Se connecter" ->
+                bouton = this.b_register_startPanel;
+            case "Quitter" ->
+                bouton = this.quitButton;
+            default ->
+                null;
+        };
+        if (bouton != null) {
+            bouton.addActionListener(listener);
+        }
     }
     
 }

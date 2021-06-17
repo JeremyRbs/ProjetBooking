@@ -1,3 +1,5 @@
+package projetbooking.Vue.Panel.Planning;
+
 
  
 import java.awt.BorderLayout;
@@ -12,17 +14,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
- 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class PlanningPanel extends JFrame {
+public class PlanningPanel extends JPanel {
     
     /// Panneau principal de planning ///
     JPanel beginPanel_planning = new JPanel(new BorderLayout(10, 20));    // Begin Panel : panneau contenant tous les panneaux
@@ -41,6 +41,9 @@ public class PlanningPanel extends JFrame {
     // Partie utilisateur
     private JLabel username_planning = new JLabel("Hubert");
     private JButton deconnection_planning = new JButton("Déconnexion");
+    private JButton reservation_planning = new JButton("Réservation");
+    private JButton salle_planning = new JButton("Salle");
+    private JButton equipement_planning = new JButton("Équipement");
 
     /// Partie calendrier ///
     protected int yy_planning; // année courante
@@ -60,8 +63,8 @@ public class PlanningPanel extends JFrame {
   public PlanningPanel() {
       
     super();
-    this.setYYMMDD(calendar_planning.get(Calendar.YEAR), calendar_planning.get(Calendar.MONTH),calendar_planning.get(Calendar.DAY_OF_MONTH));
-    this.getAccessibleContext().setAccessibleDescription("Le calendrier n'est pas accessible maintenant. Désolé !");
+    //this.beginPanel_planning.setYYMMDD(calendar_planning.get(Calendar.YEAR), calendar_planning.get(Calendar.MONTH),calendar_planning.get(Calendar.DAY_OF_MONTH));
+    //this.getAccessibleContext().setAccessibleDescription("Le calendrier n'est pas accessible maintenant. Désolé !");
     
     // North Panel
     
@@ -82,19 +85,17 @@ public class PlanningPanel extends JFrame {
     // Panneau pour sélectionner le mois et l'année
     this.westPanel_title_planning.add(monthChoice_planning = new JComboBox());
     
-    for (int i = 0; i < months.length; i++) monthChoice_planning.addItem(months[i]);
+        for (String month : months) {
+            monthChoice_planning.addItem(month);
+        }
     
     monthChoice_planning.setSelectedItem(months[mm_planning]);
-    monthChoice_planning.addActionListener(new ActionListener() {
-        
-        public void actionPerformed(ActionEvent ae) {
-          int i = monthChoice_planning.getSelectedIndex();
-          if (i >= 0) {
+    monthChoice_planning.addActionListener((ActionEvent ae) -> {
+        int i = monthChoice_planning.getSelectedIndex();
+        if (i >= 0) {
             mm_planning = i;
             recompute();
-          }
         }
-        
     });
     
     monthChoice_planning.getAccessibleContext().setAccessibleName("Mois");
@@ -108,13 +109,11 @@ public class PlanningPanel extends JFrame {
     }
     
     yearChoice_planning.setSelectedItem(Integer.toString(yy_planning));
-    yearChoice_planning.addActionListener(new ActionListener(){
-        public void actionPerformed(ActionEvent ae){
-            int i = yearChoice_planning.getSelectedIndex();
-            if (i >= 0){
-              yy_planning = Integer.parseInt(yearChoice_planning.getSelectedItem().toString());
-              recompute();
-            }
+    yearChoice_planning.addActionListener((ActionEvent ae) -> {
+        int i = yearChoice_planning.getSelectedIndex();
+        if (i >= 0){
+            yy_planning = Integer.parseInt(yearChoice_planning.getSelectedItem().toString());
+            recompute();
         }
     });
     
@@ -134,14 +133,12 @@ public class PlanningPanel extends JFrame {
     this.westPanel_planning.add(new JButton("V"));
     this.westPanel_planning.add(new JButton("S"));
  
-    ActionListener dateSetter = new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    ActionListener dateSetter = (ActionEvent e) -> {
         String num = e.getActionCommand();
         if (!num.equals("")) {
-          // Envoi du jour sélectionné
-          setDayActive(Integer.parseInt(num));
+            // Envoi du jour sélectionné
+            setDayActive(Integer.parseInt(num));
         }
-      }
     };
  
     // Création et ajout des bouttons
@@ -152,8 +149,7 @@ public class PlanningPanel extends JFrame {
       }
     }
     
-    recompute();
-    this.westPanel_planning.add(this.westPanel_planning);
+    this.beginPanel_planning.add(this.westPanel_planning);
     
     // Center Panel
     this.beginPanel_planning.add(this.centerPanel_planning, BorderLayout.CENTER);
@@ -187,17 +183,12 @@ public class PlanningPanel extends JFrame {
     this.beginPanel_planning.add(sp, BorderLayout.EAST);
     
     // South Panel
-    JButton buttonSouth = new JButton("ok");
-    this.southPanel_planning.add(buttonSouth);
+    this.southPanel_planning.add(this.reservation_planning, BorderLayout.NORTH);
+    this.southPanel_planning.add(this.salle_planning, BorderLayout.CENTER);
+    this.southPanel_planning.add(this.equipement_planning, BorderLayout.SOUTH);
     this.beginPanel_planning.add(this.southPanel_planning, BorderLayout.SOUTH);
-    
-    // Fenêtre
-    this.add(this.beginPanel_planning);
-    this.setTitle("Booking");
-    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    this.centerFrame();
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setVisible(true);
+    Component add = add(this.beginPanel_planning);
+    this.add(add);
     
   }
   
@@ -325,6 +316,31 @@ public class PlanningPanel extends JFrame {
       square.repaint();
       activeDay = newDay;
 
+    }
+    
+    /**
+     * Ajouter un écouteur à un bouton désigné par son nom
+     *
+     * @param nomBouton le nom du bouton sur lequel l'écouteur doit être ajouté
+     * @param listener l'écouteur à ajouter
+     */
+    public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
+        JButton bouton;
+        bouton = switch (nomBouton) {
+            case "Déconnexion" ->
+                bouton = this.deconnection_planning;
+            case "Réservation" ->
+                bouton = this.reservation_planning;
+            case "Salle" ->
+                bouton = this.salle_planning;
+            case "Équipement" ->
+                bouton = this.equipement_planning;
+            default ->
+                null;
+        };
+        if (bouton != null) {
+            bouton.addActionListener(listener);
+        }
     }
 
 }

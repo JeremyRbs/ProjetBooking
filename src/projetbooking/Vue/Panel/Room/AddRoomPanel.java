@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetbooking.Vue.Panel;
+package projetbooking.Vue.Panel.Room;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -18,9 +18,9 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author jerem
+ * @author Jerem
  */
-public class CreationAccountPanel extends JPanel {
+public class AddRoomPanel extends JPanel {
     
     /////// Panneau de création de compte ///////
     private JPanel phonePanel_creationAccountPanel, fieldPanel_creationAccountPanel, creationAccountPanel;
@@ -28,7 +28,7 @@ public class CreationAccountPanel extends JPanel {
     private JTextField nameField_creationAccountPanel, firstNameField_creationAccountPanel, emailField_creationAccountPanel, passwordField_creationAccountPanel, mobileField_creationAccountPanel, countryCode_creationAccountPanel;
     private JButton b_register_creationAccountPanel;
     
-    public CreationAccountPanel(){
+    public AddRoomPanel(){
         
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
         
@@ -88,5 +88,5 @@ public class CreationAccountPanel extends JPanel {
         this.add(add);
         
     }
-    
+   
 }

@@ -1,7 +1,7 @@
 /*
  * Cette page Fenetre permet de créer une fenêtre simple.
 */
-package projetbooking.Controller;
+
 
 import javax.swing.*;
 import java.awt.*;

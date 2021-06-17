@@ -5,60 +5,58 @@ package projetbooking.Vue;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import projetbooking.Vue.Panel.ConnectionPanel;
-import projetbooking.Vue.Panel.CreationAccountPanel;
+import projetbooking.Vue.Panel.Booking.BookingPanel;
+import projetbooking.Vue.Panel.StartPanel;
+import projetbooking.Vue.Panel.ConnectionPanel.ConnectionPanel;
+import projetbooking.Vue.Panel.ConnectionPanel.CreationAccountPanel;
+import projetbooking.Vue.Panel.Equipment.EquipmentPanel;
+import projetbooking.Vue.Panel.Planning.PlanningPanel;
+import projetbooking.Vue.Panel.Room.RoomPanel;
 
 public class Vue extends JFrame {
 
     ////////////////////////////////////////////////////////////////////////
     ///////////// Déclarations et initialisations des panneaux /////////////
     ////////////////////////////////////////////////////////////////////////
-    
-    /////// Bouton quitter pour fermer l'application ///////
-    private JButton quitButton = new JButton("Quitter");
-    
+
     /////// Panneau courant ///////
-    private JPanel previousPanel = null;
+    private JPanel currentPanel = null;
     
-    /////// Panneau de démarrage ///////
-    private JPanel currentPanel;
-    private JLabel labelBooking = new JLabel("BOOKING");
-    private JButton b_creation_startPanel;
-    private JButton b_register_startPanel;
+    // Pour le démarrage
+    private boolean set = false;
+    
+    // Panel //
+    private StartPanel startPanel = new StartPanel();
+    private ConnectionPanel connectionPanel = new ConnectionPanel();
+    private CreationAccountPanel creationAccountPanel = new CreationAccountPanel();
+    private PlanningPanel planningPanel = new PlanningPanel();
+    private BookingPanel bookingPanel = new BookingPanel();
+    private RoomPanel roomPanel = new RoomPanel();
+    private EquipmentPanel equipmentPanel = new EquipmentPanel();
 
     ////////////////////////////////////////////////////////////////////////
     ////////////////// Constructeur de la classe Fenetre ///////////////////
     ////////////////////////////////////////////////////////////////////////
-    
+
     public Vue()
     {
-        
+
         //////////////////////////////////////////////////
-        
+
         ////////////////////////////////////
         /////// Panneau de démarrage ///////
         ////////////////////////////////////
-        
-        //creationAccountPanel et ses composants
-        currentPanel = new JPanel();
-        currentPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
-        
-        Font font = new Font("MS Sans Serif", Font.BOLD, 18);
-        
-        b_creation_startPanel = new JButton("Se créer un compte");
-        b_register_startPanel = new JButton("Se connecter");
-        
-        currentPanel.add(b_creation_startPanel);
-        currentPanel.add(b_register_startPanel);
-        currentPanel.add(quitButton);
-        this.setPane(this.currentPanel);
-   
+
+        if(set == false){
+            set = true;
+            this.setPane(this.startPanel);
+        }
+
         ////////////////////////////////////////
         /////// Paramètres de la fenêtre ///////
         ////////////////////////////////////////
-        
+
         this.setTitle("Booking");
         this.setVisible(true);
         this.setResizable(false);
@@ -70,7 +68,7 @@ public class Vue extends JFrame {
     ////////////////////////////////////////////////////////////////////////
     ///////////////////// Méthodes de la classe Fenetre ////////////////////
     ////////////////////////////////////////////////////////////////////////
-    
+
     // Méthode permettant de centrer la fenêtre
     public void centerFrame() {
         Dimension currentScreen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -78,16 +76,15 @@ public class Vue extends JFrame {
         int y = (int) ((currentScreen.getHeight() - this.getHeight()) / 2);
         this.setLocation(x, y);
     }
-    
+
     public void setPane(JPanel pane){
-        
-        if(this.previousPanel != null){
-            
-            this.getContentPane().remove(this.previousPanel);
+
+        if(this.currentPanel != null){
+
+            this.getContentPane().remove(this.currentPanel);
             this.repaint();
-            
+
         }
-        this.getContentPane().add(pane);
         this.setContentPane(pane);
         this.validate();
         this.pack();
@@ -95,6 +92,28 @@ public class Vue extends JFrame {
         this.repaint();
     }
     
+    public void activatePanel(String namePanel){
+        this.setPane(
+        switch(namePanel){
+            case "startPanel"->
+                this.startPanel;
+            case "connectionPanel"->
+                this.connectionPanel;
+            case "creationAccountPanel"->
+                this.creationAccountPanel;
+            case "planningPanel"->
+                this.planningPanel;
+            case "bookingPanel"->
+                this.bookingPanel;
+            case "roomPanel"->
+                this.roomPanel;
+            case "equipmentPanel"->
+                this.equipmentPanel;
+            default->
+                null;
+        });
+    }
+
     /**
      * Ajouter un écouteur à un bouton désigné par son nom
      *
@@ -102,21 +121,34 @@ public class Vue extends JFrame {
      * @param listener l'écouteur à ajouter
      */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
-        JButton bouton;
-        bouton = switch (nomBouton) {
-            case "Se créer un compte" ->
-                bouton = this.b_creation_startPanel;
-            case "Se connecter" ->
-                bouton = this.b_register_startPanel;
-            case "Quitter" ->
-                bouton = this.quitButton;
-            case "Connexion" ->
-                bouton = ConnectionPanel.getB_register_connectionPanel();
-            default ->
-                null;
-        };
-        if (bouton != null) {
-            bouton.addActionListener(listener);
+        JButton bouton = null;
+        switch(nomBouton){
+            
+            // StartPanel
+            case "Se créer un compte":
+                this.startPanel.ajouterEcouteurBouton(nomBouton, listener);
+            case "Se connecter":
+                this.startPanel.ajouterEcouteurBouton(nomBouton, listener);
+            case "Quitter":
+                this.startPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
+            // ConnectionPanel
+            case "Connexion":
+                this.connectionPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
+            // CreationAccountPanel
+            case "Créer un compte":
+                this.creationAccountPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
+            // PlanningPanel
+            case "Déconnexion":
+                this.planningPanel.ajouterEcouteurBouton(nomBouton, listener);
+            case "Réservation":
+                this.planningPanel.ajouterEcouteurBouton(nomBouton, listener);
+            case "Salle":
+                this.planningPanel.ajouterEcouteurBouton(nomBouton, listener);
+            case "Équipement":
+                this.planningPanel.ajouterEcouteurBouton(nomBouton, listener);
         }
     }
-}
+} 
