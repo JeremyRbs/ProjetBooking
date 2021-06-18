@@ -89,6 +89,28 @@ public class CreationAccountPanel extends JPanel {
         this.add(add);
         
     }
+
+    public JTextField getNameField_creationAccountPanel() {
+        return nameField_creationAccountPanel;
+    }
+
+    public JTextField getFirstNameField_creationAccountPanel() {
+        return firstNameField_creationAccountPanel;
+    }
+
+    public JTextField getEmailField_creationAccountPanel() {
+        return emailField_creationAccountPanel;
+    }
+
+    public JTextField getPasswordField_creationAccountPanel() {
+        return passwordField_creationAccountPanel;
+    }
+
+    public JTextField getMobileField_creationAccountPanel() {
+        return mobileField_creationAccountPanel;
+    }
+    
+    
     
     /**
      * Ajouter un écouteur à un bouton désigné par son nom

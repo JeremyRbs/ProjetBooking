@@ -9,6 +9,8 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -63,36 +65,12 @@ public class ConnectionPanel extends JPanel{
         
     }
 
-    public JPanel getFieldPanel_connectionPanel() {
-        return fieldPanel_connectionPanel;
-    }
-
-    public JPanel getConnectionPanel() {
-        return connectionPanel;
-    }
-
-    public JLabel getEmail_connectionPanel() {
-        return email_connectionPanel;
-    }
-
-    public JLabel getPassword_connectionPanel() {
-        return password_connectionPanel;
-    }
-
-    public JLabel getL_register_connectionPanel() {
-        return l_register_connectionPanel;
-    }
-
     public JTextField getEmailField_connectionPanel() {
         return emailField_connectionPanel;
     }
 
     public JTextField getPasswordField_connectionPanel() {
         return passwordField_connectionPanel;
-    }
-
-    public String getB_register_connectionPanel() {
-        return b_register_connectionPanel.getActionCommand();
     }
     
     /**

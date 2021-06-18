@@ -6,6 +6,9 @@ package projetbooking.Vue;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import projetbooking.Vue.Panel.Booking.BookingPanel;
 import projetbooking.Vue.Panel.StartPanel;
 import projetbooking.Vue.Panel.ConnectionPanel.ConnectionPanel;
@@ -19,6 +22,9 @@ public class Vue extends JFrame {
     ////////////////////////////////////////////////////////////////////////
     ///////////// Déclarations et initialisations des panneaux /////////////
     ////////////////////////////////////////////////////////////////////////
+    
+    // ArrayList
+    ArrayList listeTexte = new ArrayList();
 
     /////// Panneau courant ///////
     private JPanel currentPanel = null;
@@ -30,7 +36,9 @@ public class Vue extends JFrame {
     private StartPanel startPanel = new StartPanel();
     private ConnectionPanel connectionPanel = new ConnectionPanel();
     private CreationAccountPanel creationAccountPanel = new CreationAccountPanel();
-    private PlanningPanel planningPanel = new PlanningPanel();
+    private PlanningPanel planningPanel_1 = new PlanningPanel(1);
+    private PlanningPanel planningPanel_2 = new PlanningPanel(2);
+    private PlanningPanel planningPanel_3 = new PlanningPanel(3);
     private BookingPanel bookingPanel = new BookingPanel();
     private RoomPanel roomPanel = new RoomPanel();
     private EquipmentPanel equipmentPanel = new EquipmentPanel();
@@ -101,8 +109,12 @@ public class Vue extends JFrame {
                 this.connectionPanel;
             case "creationAccountPanel"->
                 this.creationAccountPanel;
-            case "planningPanel"->
-                this.planningPanel;
+            case "planningPanel_1"->
+                this.planningPanel_1;
+            case "planningPanel_2"->
+                this.planningPanel_2;
+            case "planningPanel_3"->
+                this.planningPanel_3;
             case "bookingPanel"->
                 this.bookingPanel;
             case "roomPanel"->
@@ -142,13 +154,48 @@ public class Vue extends JFrame {
                 
             // PlanningPanel
             case "Déconnexion":
-                this.planningPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.planningPanel_1.ajouterEcouteurBouton(nomBouton, listener);
+                this.planningPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+                this.planningPanel_3.ajouterEcouteurBouton(nomBouton, listener);
             case "Réservation":
-                this.planningPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.planningPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+                this.planningPanel_3.ajouterEcouteurBouton(nomBouton, listener);
             case "Salle":
-                this.planningPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.planningPanel_3.ajouterEcouteurBouton(nomBouton, listener);
             case "Équipement":
-                this.planningPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.planningPanel_3.ajouterEcouteurBouton(nomBouton, listener);
         }
+    }
+    
+    /**
+     * Retourne une ArrayList de chaînes contenant les textes saisient dans les champs textes du
+     * panneau.
+     *
+     * @param nomPanel
+     * @return un ArrayList de String contenant le texte
+     */
+    public ArrayList getText(String nomPanel) {
+        
+        // L'ArrayList se vide pour éviter des erreurs
+        listeTexte.clear();
+        
+        // Suivant le nom du panneau, on ajoute certaines informations
+        switch(nomPanel){
+            case "ConnectionPanel":
+                listeTexte.add(this.connectionPanel.getEmailField_connectionPanel().getText());
+                listeTexte.add(this.connectionPanel.getPasswordField_connectionPanel().getText());
+                break;
+            case "CreationAccountPanel":
+                listeTexte.add(this.creationAccountPanel.getNameField_creationAccountPanel().getText());
+                listeTexte.add(this.creationAccountPanel.getFirstNameField_creationAccountPanel().getText());
+                listeTexte.add(this.creationAccountPanel.getEmailField_creationAccountPanel().getText());
+                listeTexte.add(this.creationAccountPanel.getPasswordField_creationAccountPanel().getText());
+                listeTexte.add(this.creationAccountPanel.getMobileField_creationAccountPanel().getText());
+                break;
+                
+        }
+        
+        // Renvoi de l'ArrayList
+        return listeTexte;
     }
 } 

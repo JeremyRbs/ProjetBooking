@@ -4,21 +4,19 @@ package projetbooking.Controller;
  * Cours NF0A19 - Chapitre 6 - JUNIT sur architecture MVC
  *
  */
-import java.awt.Color;
+import static BDD.Requetes.connectAccount;
+import static BDD.Requetes.connexion;
+import static BDD.Requetes.createAccount;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import projetbooking.Modele.Modele;
-import projetbooking.Vue.Panel.ConnectionPanel.ConnectionPanel;
-import projetbooking.Vue.Panel.ConnectionPanel.CreationAccountPanel;
 import projetbooking.Vue.Vue;
-import projetbooking.Vue.Panel.ConnectionPanel.ConnectionPanel;
 
 /**
  * La classe Controleur represente le modèle de l'architecture MVC.
@@ -27,6 +25,12 @@ import projetbooking.Vue.Panel.ConnectionPanel.ConnectionPanel;
  */
 public class Controleur extends KeyAdapter implements MouseListener, ActionListener {
 
+    /////// Connexion BDD ///////
+    private Statement statement = connexion();
+    
+    // ArrayList
+    ArrayList listeTexte = new ArrayList();
+    
     private final Vue laVue;
     private final Modele leModele;
 
@@ -65,6 +69,8 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
         // RoomPanel
 
         // EquipmentPanel
+        
+        // Écouteurs champs texte
     }
 
     /**
@@ -93,30 +99,63 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
         switch (source.getText()) {
             
             // StartPanel
-            case "Se créer un compte" ->
+            case "Se créer un compte" :
                 laVue.activatePanel("creationAccountPanel");
-            case "Se connecter" ->
+                break;
+            case "Se connecter" :
                 laVue.activatePanel("connectionPanel");
-            case "Quitter" ->
+                break;
+            case "Quitter" :
                 System.exit(0);
+                break;
             
             // ConnectionPanel
-            case "Connexion" ->
-                laVue.activatePanel("planningPanel");
+            case "Connexion" :
+                this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+                listeTexte.clear();
+                listeTexte = this.laVue.getText("ConnectionPanel");
+                //System.out.println(listeTexte.size());
+                //System.out.println(this.listeTexte.get(1).toString());
+                
+                if (this.statement != null) {
+                    //Execution de requête de lecture sur l'objet Statement
+                    switch (connectAccount(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString())) {
+                        case 1 -> laVue.activatePanel("planningPanel_1");
+                        case 2 -> laVue.activatePanel("planningPanel_2");
+                        default -> laVue.activatePanel("planningPanel_3");
+                    }
+                }
+                break;
                 
             // CreationAccountPanel
-            case "Créer un compte" ->
-                laVue.activatePanel("planningPanel");
+            case "Créer un compte" :
+                this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+                listeTexte.clear();
+                listeTexte = this.laVue.getText("CreationAccountPanel");
+                System.out.println(listeTexte.size());
+                System.out.println(this.listeTexte.get(1).toString());
+                
+                if (statement != null) {
+                    //Execution de requête de lecture sur l'objet Statement
+                    if (createAccount(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString(), this.listeTexte.get(2).toString(), this.listeTexte.get(3).toString()) == false ){
+                        laVue.activatePanel("planningPanel");
+                    }
+                }
+                break;
                 
             // PlanningPanel
-            case "Déconnexion" ->
+            case "Déconnexion" :
                 laVue.activatePanel("startPanel");
-            case "Réservation" ->
+                break;
+            case "Réservation" :
                 laVue.activatePanel("bookingPanel");
-            case "Salle" ->
+                break;
+            case "Salle" :
                 laVue.activatePanel("roomPanel");
-            case "Équipement" ->
+                break;
+            case "Équipement" :
                 laVue.activatePanel("equipmentPanel");
+                break;
                 
             // BookingPanel
                 
@@ -126,31 +165,35 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
         }
     }
 
-    //Méthode de l'interface KeyListener
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
-
-    //Méthodes de l'interface MouseListener
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-
     public void mouseClicked(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+//    //Méthode de l'interface KeyListener
+//    @Override
+//    public void keyReleased(KeyEvent e) {
+//        laVue.setEtatBoutonOk(!laVue.getText().isEmpty() && !laVue.getInformation().isEmpty());
+//    }
 
 }

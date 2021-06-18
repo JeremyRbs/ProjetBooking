@@ -47,7 +47,7 @@ public class Requetes {
                 System.out.println("Erreur de création de la base de donnée " + ex);
             }
         }
-        return 1;
+        return 3;
     }
 
 }

@@ -59,8 +59,9 @@ public class PlanningPanel extends JPanel {
  
   /**
    * Constructeur de Cal
+     * @param niveau
    */
-  public PlanningPanel() {
+  public PlanningPanel(int niveau) {
       
     super();
     //this.beginPanel_planning.setYYMMDD(calendar_planning.get(Calendar.YEAR), calendar_planning.get(Calendar.MONTH),calendar_planning.get(Calendar.DAY_OF_MONTH));
@@ -183,9 +184,11 @@ public class PlanningPanel extends JPanel {
     this.beginPanel_planning.add(sp, BorderLayout.EAST);
     
     // South Panel
-    this.southPanel_planning.add(this.reservation_planning, BorderLayout.NORTH);
-    this.southPanel_planning.add(this.salle_planning, BorderLayout.CENTER);
-    this.southPanel_planning.add(this.equipement_planning, BorderLayout.SOUTH);
+    if(niveau == 3){
+        this.southPanel_planning.add(this.reservation_planning, BorderLayout.NORTH);
+        this.southPanel_planning.add(this.salle_planning, BorderLayout.CENTER);
+        this.southPanel_planning.add(this.equipement_planning, BorderLayout.SOUTH);
+    }
     this.beginPanel_planning.add(this.southPanel_planning, BorderLayout.SOUTH);
     Component add = add(this.beginPanel_planning);
     this.add(add);
