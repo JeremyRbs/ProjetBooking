@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetbooking.Vue.Panel.Room;
+package projetbooking.Vue.Panel.Booking;
 
+import projetbooking.Vue.Panel.Equipment.*;
+import projetbooking.Vue.Panel.Room.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -20,7 +22,7 @@ import javax.swing.JTable;
  *
  * @author Jerem
  */
-public class EditRoomPanel extends JPanel{
+public class EditBookingPanel extends JPanel{
     
     private boolean DEBUG = false;
     private JPanel panel = new JPanel(new BorderLayout()),
@@ -28,30 +30,23 @@ public class EditRoomPanel extends JPanel{
             centerPanel = new JPanel(new BorderLayout()),
             southPanel = new JPanel(new BorderLayout());
     
-    private JLabel titre = new JLabel("Modifier la salle");
-    private JButton b_edit = new JButton("Modifier la salle");
+    private JLabel titre = new JLabel("Modifier l'équipement");
+    private JButton b_edit = new JButton("Modifier l'équipement");
     private JButton b_back = new JButton("Retour");
     
-    public EditRoomPanel(){
+    public EditBookingPanel(){
 
         
         String[] columnNames = {"Identifiant",
                                 "Nom",
-                                "Taille",
-                                "Équipement",
                                 "Actions"};
 
         Object[][] data = {
-	    {"Kathy", "Smith",
-	     "Snowboarding", new Integer(5), true},
-	    {"John", "Doe",
-	     "Rowing", new Integer(3), false},
-	    {"Sue", "Black",
-	     "Knitting", new Integer(2), false},
-	    {"Jane", "White",
-	     "Speed reading", new Integer(20), false},
-	    {"Joe", "Brown",
-	     "Pool", new Integer(10), false}
+	    {1, "Salle", true},
+	    {2, "Salle", false},
+	    {3, "Salle", false},
+	    {4, "Salle", false},
+	    {5, "Salle", false}
         };
 
         final JTable table = new JTable(data, columnNames);
@@ -108,7 +103,7 @@ public class EditRoomPanel extends JPanel{
         bouton = switch (nomBouton) {
             case "Retour" ->
                 bouton = this.b_back;
-            case "Modifier la salle" ->
+            case "Modifier l'équipement" ->
                 bouton = this.b_edit;
             default ->
                 null;

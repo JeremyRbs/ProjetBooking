@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetbooking.Vue.Panel.Room;
+package projetbooking.Vue.Panel.Equipment;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -20,7 +20,7 @@ import javax.swing.JTable;
  *
  * @author Jerem
  */
-public class EditRoomPanel extends JPanel{
+public class RemoveEquipmentPanel extends JPanel{
     
     private boolean DEBUG = false;
     private JPanel panel = new JPanel(new BorderLayout()),
@@ -28,30 +28,23 @@ public class EditRoomPanel extends JPanel{
             centerPanel = new JPanel(new BorderLayout()),
             southPanel = new JPanel(new BorderLayout());
     
-    private JLabel titre = new JLabel("Modifier la salle");
-    private JButton b_edit = new JButton("Modifier la salle");
+    private JLabel titre = new JLabel("Supprimer l'équipement");
+    private JButton b_remove = new JButton("Supprimer l'équipement");
     private JButton b_back = new JButton("Retour");
     
-    public EditRoomPanel(){
+    public RemoveEquipmentPanel(){
 
         
         String[] columnNames = {"Identifiant",
                                 "Nom",
-                                "Taille",
-                                "Équipement",
                                 "Actions"};
 
         Object[][] data = {
-	    {"Kathy", "Smith",
-	     "Snowboarding", new Integer(5), true},
-	    {"John", "Doe",
-	     "Rowing", new Integer(3), false},
-	    {"Sue", "Black",
-	     "Knitting", new Integer(2), false},
-	    {"Jane", "White",
-	     "Speed reading", new Integer(20), false},
-	    {"Joe", "Brown",
-	     "Pool", new Integer(10), false}
+	    {1, "Salle", true},
+	    {2, "Salle", false},
+	    {3, "Salle", false},
+	    {4, "Salle", false},
+	    {5, "Salle", false}
         };
 
         final JTable table = new JTable(data, columnNames);
@@ -60,6 +53,7 @@ public class EditRoomPanel extends JPanel{
 
         if (DEBUG) {
             table.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(MouseEvent e) {
                     printDebugData(table);
                 }
@@ -75,7 +69,7 @@ public class EditRoomPanel extends JPanel{
         this.centerPanel.add(scrollPane, BorderLayout.CENTER);
         this.panel.add(this.centerPanel, BorderLayout.CENTER);
         this.southPanel.add(this.b_back, BorderLayout.WEST);
-        this.southPanel.add(this.b_edit, BorderLayout.CENTER);
+        this.southPanel.add(this.b_remove, BorderLayout.CENTER);
         this.panel.add(this.southPanel, BorderLayout.SOUTH);
         add(this.panel);
     }
@@ -108,8 +102,8 @@ public class EditRoomPanel extends JPanel{
         bouton = switch (nomBouton) {
             case "Retour" ->
                 bouton = this.b_back;
-            case "Modifier la salle" ->
-                bouton = this.b_edit;
+            case "Supprimer l'équipement" ->
+                bouton = this.b_remove;
             default ->
                 null;
         };
@@ -117,5 +111,4 @@ public class EditRoomPanel extends JPanel{
             bouton.addActionListener(listener);
         }
     }
-    
 }

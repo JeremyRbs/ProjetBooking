@@ -65,10 +65,32 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
         uneVue.ajouterEcouteurBouton("Équipement", this);
         
         // BookingPanel
+        uneVue.ajouterEcouteurBouton("Créer une réservation", this);
+        uneVue.ajouterEcouteurBouton("Modifier une réservation", this);
+        uneVue.ajouterEcouteurBouton("Supprimer une réservation", this);
                 
         // RoomPanel
+        uneVue.ajouterEcouteurBouton("Créer une salle", this);
+        uneVue.ajouterEcouteurBouton("Modifier une salle", this);
+        uneVue.ajouterEcouteurBouton("Supprimer une salle", this);
+        
+        // AddRoomPanel
+        uneVue.ajouterEcouteurBouton("Ajouter la salle", this);
+        
+        // EditRoomPanel
+        uneVue.ajouterEcouteurBouton("Modifier la salle", this);
+        
+        // RemoveRoomPanel
+        uneVue.ajouterEcouteurBouton("Supprimer la salle", this);
 
         // EquipmentPanel
+        uneVue.ajouterEcouteurBouton("Créer un équipement", this);
+        uneVue.ajouterEcouteurBouton("Modifier un équipement", this);
+        uneVue.ajouterEcouteurBouton("Supprimer un équipement", this);
+        uneVue.ajouterEcouteurBouton("Réservations Administrateur", this);
+        
+        // Retour
+        uneVue.ajouterEcouteurBouton("Retour", this);
         
         // Écouteurs champs texte
     }
@@ -158,10 +180,59 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
                 break;
                 
             // BookingPanel
+            case "Créer une réservation" :
+                laVue.activatePanel("addBookingPanel");
+                break;
+            case "Modifier une réservation" :
+                laVue.activatePanel("editBookingPanel");
+                break;
+            case "Supprimer une réservation" :
+                laVue.activatePanel("removeBookingPanel");
+                break;
+            case "Réservations Administrateur" :
+                laVue.activatePanel("adminBookingPanel");
+                break;
                 
             // RoomPanel
+            case "Créer une salle" :
+                laVue.activatePanel("addRoomPanel");
+                break;
+            case "Modifier une salle" :
+                laVue.activatePanel("editRoomPanel");
+                break;
+            case "Supprimer une salle" :
+                laVue.activatePanel("removeRoomPanel");
+                break;
+                
+            // AddRoomPanel
+            case "Ajouter la salle" :
+                //laVue.activatePanel("addRoomPanel");
+                break;
+            // EditRoomPanel
+            case "Modifier la salle" :
+                //laVue.activatePanel("editRoomPanel");
+                break;
+            // RemoveRoomPanel
+            case "Supprimer la salle" :
+                //laVue.activatePanel("removeRoomPanel");
+                break;
                 
             // EquipmentPanel
+            case "Créer un équipement" :
+                laVue.activatePanel("addEquipmentPanel");
+                break;
+            case "Modifier un équipement" :
+                laVue.activatePanel("editEquipmentPanel");
+                break;
+            case "Supprimer un équipement" :
+                laVue.activatePanel("removeEquipmentPanel");
+                break;
+                
+            // Retour
+            case "Retour" :
+                laVue.backPanel();
+                laVue.activatePanel("Retour");
+                break;
         }
     }
 

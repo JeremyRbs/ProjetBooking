@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetbooking.Vue.Panel.Room;
+package projetbooking.Vue.Panel.Booking;
 
+import projetbooking.Vue.Panel.Equipment.*;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,7 +21,7 @@ import javax.swing.JTextField;
  *
  * @author Jerem
  */
-public class AddRoomPanel extends JPanel {
+public class AddBookingPanel extends JPanel {
     
     /////// Déclarations des variables privées ///////
     
@@ -31,35 +30,26 @@ public class AddRoomPanel extends JPanel {
             creationAccountPanel = new JPanel();
     
     // JLabel
-    private JLabel nameLabel = new JLabel("Nom : "),
-            tailleLabel = new JLabel("Taille (en m²) :"),
-            equipementLabel = new JLabel("Équipement : ");
+    private JLabel nameLabel = new JLabel("Nom : ");
     
     // JTextField
-    private JTextField nameField = new JTextField(15),
-            tailleField = new JTextField(15),
-            equipementField = new JTextField(15);
+    private JTextField nameField = new JTextField(15);
     
     //JButton
-    private JButton b_add = new JButton("Ajouter la salle"),
+    private JButton b_add = new JButton("Ajouter l'équipement"),
             b_back = new JButton("Retour");
     
     // Constructeur de la classe
-    public AddRoomPanel(){
+    public AddBookingPanel(){
         
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
 
         //fieldPanel_creationAccountPanel et ses composants
         this.fieldPanel = new JPanel();
-        this.fieldPanel.setLayout(new GridLayout(3,2,3,3));
+        this.fieldPanel.setLayout(new GridLayout(1,2,3,3));
         this.fieldPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
         this.fieldPanel.add(this.nameLabel);
         this.fieldPanel.add(this.nameField);
-        this.fieldPanel.add(this.tailleLabel);
-        this.fieldPanel.add(this.tailleField);
-        this.fieldPanel.add(this.equipementLabel);
-        this.fieldPanel.add(this.equipementLabel);
-        this.fieldPanel.add(this.equipementField);
 
         this.creationAccountPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
         this.creationAccountPanel.setLayout(new BoxLayout(this.creationAccountPanel, BoxLayout.Y_AXIS));
@@ -79,14 +69,6 @@ public class AddRoomPanel extends JPanel {
     public JTextField getNameField() {
         return nameField;
     }
-
-    public JTextField getTailleField() {
-        return tailleField;
-    }
-
-    public JTextField getEquipementField() {
-        return equipementField;
-    }
     
     /**
      * Ajouter un écouteur à un bouton désigné par son nom
@@ -99,7 +81,7 @@ public class AddRoomPanel extends JPanel {
         bouton = switch (nomBouton) {
             case "Retour" ->
                 bouton = this.b_back;
-            case "Ajouter la salle" ->
+            case "Ajouter l'équipement" ->
                 bouton = this.b_add;
             default ->
                 null;

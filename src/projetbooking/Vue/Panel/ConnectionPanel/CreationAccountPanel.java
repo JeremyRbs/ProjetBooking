@@ -24,48 +24,49 @@ import javax.swing.JTextField;
 public class CreationAccountPanel extends JPanel {
     
     /////// Panneau de création de compte ///////
-    private JPanel phonePanel_creationAccountPanel, fieldPanel_creationAccountPanel, creationAccountPanel;
-    private JLabel name_creationAccountPanel, firstName_creationAccountPanel, email_creationAccountPanel, password_creationAccountPanel, mobile_creationAccountPanel, l_register_creationAccountPanel;
-    private JTextField nameField_creationAccountPanel, firstNameField_creationAccountPanel, emailField_creationAccountPanel, passwordField_creationAccountPanel, mobileField_creationAccountPanel, countryCode_creationAccountPanel;
-    private JButton b_register_creationAccountPanel;
+    private JPanel phonePanel, fieldPanel, creationAccountPanel;
+    private JLabel name, firstName, email, password, mobile, l_register;
+    private JTextField nameField, firstNameField, emailField, passwordField, mobileField, countryCode;
+    private JButton b_register,
+            b_back = new JButton("Retour");
     
     public CreationAccountPanel(){
         
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
         
         //phonePanelcreationAccountPanel et ses composants
-        phonePanel_creationAccountPanel = new JPanel();
-        phonePanel_creationAccountPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        mobileField_creationAccountPanel = new JTextField(15);
-        countryCode_creationAccountPanel = new JTextField(2);
-        countryCode_creationAccountPanel.setText("+33");
-        countryCode_creationAccountPanel.setEnabled(false);
-        phonePanel_creationAccountPanel.add(countryCode_creationAccountPanel);
-        phonePanel_creationAccountPanel.add(mobileField_creationAccountPanel);
+        phonePanel = new JPanel();
+        phonePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        mobileField = new JTextField(15);
+        countryCode = new JTextField(2);
+        countryCode.setText("+33");
+        countryCode.setEnabled(false);
+        phonePanel.add(countryCode);
+        phonePanel.add(mobileField);
 
         //fieldPanel_creationAccountPanel et ses composants
-        fieldPanel_creationAccountPanel = new JPanel();
-        fieldPanel_creationAccountPanel.setLayout(new GridLayout(5,2,3,3));
-        fieldPanel_creationAccountPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
-        name_creationAccountPanel = new JLabel("Nom : ");
-        firstName_creationAccountPanel = new JLabel("Prénom :");
-        email_creationAccountPanel = new JLabel("Email : ");
-        password_creationAccountPanel = new JLabel("Mot de passe : ");
-        mobile_creationAccountPanel = new JLabel("Téléphone : ");
-        nameField_creationAccountPanel = new JTextField(15);
-        firstNameField_creationAccountPanel = new JTextField(15);
-        emailField_creationAccountPanel = new JTextField(15);
-        passwordField_creationAccountPanel = new JTextField(15);
-        fieldPanel_creationAccountPanel.add(name_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(nameField_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(firstName_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(firstNameField_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(email_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(emailField_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(password_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(passwordField_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(mobile_creationAccountPanel);
-        fieldPanel_creationAccountPanel.add(phonePanel_creationAccountPanel);
+        fieldPanel = new JPanel();
+        fieldPanel.setLayout(new GridLayout(5,2,3,3));
+        fieldPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
+        name = new JLabel("Nom : ");
+        firstName = new JLabel("Prénom :");
+        email = new JLabel("Email : ");
+        password = new JLabel("Mot de passe : ");
+        mobile = new JLabel("Téléphone : ");
+        nameField = new JTextField(15);
+        firstNameField = new JTextField(15);
+        emailField = new JTextField(15);
+        passwordField = new JTextField(15);
+        fieldPanel.add(name);
+        fieldPanel.add(nameField);
+        fieldPanel.add(firstName);
+        fieldPanel.add(firstNameField);
+        fieldPanel.add(email);
+        fieldPanel.add(emailField);
+        fieldPanel.add(password);
+        fieldPanel.add(passwordField);
+        fieldPanel.add(mobile);
+        fieldPanel.add(phonePanel);
 
         //creationAccountPanel et ses composants
         creationAccountPanel = new JPanel();
@@ -74,40 +75,42 @@ public class CreationAccountPanel extends JPanel {
         
         font = new Font("MS Sans Serif", Font.BOLD, 18);
         
-        l_register_creationAccountPanel = new JLabel("Créer un compte");
-        l_register_creationAccountPanel.setFont(font);
-        l_register_creationAccountPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        l_register = new JLabel("Créer un compte");
+        l_register.setFont(font);
+        l_register.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        b_register_creationAccountPanel = new JButton("Créer un compte");
-        b_register_creationAccountPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        b_register = new JButton("Créer un compte");
+        b_register.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        creationAccountPanel.add(l_register_creationAccountPanel);
-        creationAccountPanel.add(fieldPanel_creationAccountPanel);
-        creationAccountPanel.add(b_register_creationAccountPanel);
+        creationAccountPanel.add(l_register);
+        creationAccountPanel.add(fieldPanel);
+        creationAccountPanel.add(b_register);
+        b_back.setAlignmentX(Component.CENTER_ALIGNMENT);
+        creationAccountPanel.add(b_back);
         
         Component add = add(this.creationAccountPanel);
         this.add(add);
         
     }
 
-    public JTextField getNameField_creationAccountPanel() {
-        return nameField_creationAccountPanel;
+    public JTextField getNameField() {
+        return nameField;
     }
 
-    public JTextField getFirstNameField_creationAccountPanel() {
-        return firstNameField_creationAccountPanel;
+    public JTextField getFirstNameField() {
+        return firstNameField;
     }
 
-    public JTextField getEmailField_creationAccountPanel() {
-        return emailField_creationAccountPanel;
+    public JTextField getEmailField() {
+        return emailField;
     }
 
-    public JTextField getPasswordField_creationAccountPanel() {
-        return passwordField_creationAccountPanel;
+    public JTextField getPasswordField() {
+        return passwordField;
     }
 
-    public JTextField getMobileField_creationAccountPanel() {
-        return mobileField_creationAccountPanel;
+    public JTextField getMobileField() {
+        return mobileField;
     }
     
     
@@ -121,8 +124,10 @@ public class CreationAccountPanel extends JPanel {
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
         JButton bouton;
         bouton = switch (nomBouton) {
+            case "Retour" ->
+                bouton = this.b_back;
             case "Créer un compte" ->
-                bouton = this.b_register_creationAccountPanel;
+                bouton = this.b_register;
             default ->
                 null;
         };

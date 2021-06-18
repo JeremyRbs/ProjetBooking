@@ -25,52 +25,55 @@ import javax.swing.JTextField;
 public class ConnectionPanel extends JPanel{
     
     /////// Panneau de connexion de compte ///////
-    private JPanel fieldPanel_connectionPanel, connectionPanel;
-    private JLabel email_connectionPanel, password_connectionPanel, l_register_connectionPanel;
-    private JTextField emailField_connectionPanel, passwordField_connectionPanel;
-    private JButton b_register_connectionPanel;
+    private JPanel fieldPanel, connectionPanel;
+    private JLabel email, password, l_register;
+    private JTextField emailField, passwordField;
+    private JButton b_register,
+            b_back = new JButton("Retour");
     
     public ConnectionPanel(){
         
         //fieldPanel_connectionPanel et ses composants
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
-        fieldPanel_connectionPanel = new JPanel();
-        fieldPanel_connectionPanel.setLayout(new GridLayout(5,2,3,3));
-        fieldPanel_connectionPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
-        email_connectionPanel = new JLabel("Mail : ");
-        password_connectionPanel = new JLabel("Mot de passe : ");
-        emailField_connectionPanel = new JTextField(15);
-        passwordField_connectionPanel = new JTextField(15);
-        fieldPanel_connectionPanel.add(email_connectionPanel);
-        fieldPanel_connectionPanel.add(emailField_connectionPanel);
-        fieldPanel_connectionPanel.add(password_connectionPanel);
-        fieldPanel_connectionPanel.add(passwordField_connectionPanel);
+        fieldPanel = new JPanel();
+        fieldPanel.setLayout(new GridLayout(5,2,3,3));
+        fieldPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
+        email = new JLabel("Mail : ");
+        password = new JLabel("Mot de passe : ");
+        emailField = new JTextField(15);
+        passwordField = new JTextField(15);
+        fieldPanel.add(email);
+        fieldPanel.add(emailField);
+        fieldPanel.add(password);
+        fieldPanel.add(passwordField);
 
         //connectionPanel et ses composants
         connectionPanel = new JPanel();
         connectionPanel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
         connectionPanel.setLayout(new BoxLayout(connectionPanel, BoxLayout.Y_AXIS));
         font = new Font("MS Sans Serif", Font.BOLD, 18);
-        l_register_connectionPanel = new JLabel("Se connecter");
-        l_register_connectionPanel.setFont(font);
-        l_register_connectionPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b_register_connectionPanel = new JButton("Connexion");
-        b_register_connectionPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        l_register = new JLabel("Se connecter");
+        l_register.setFont(font);
+        l_register.setAlignmentX(Component.CENTER_ALIGNMENT);
+        b_register = new JButton("Connexion");
+        b_register.setAlignmentX(Component.CENTER_ALIGNMENT);
         //b_register_connectionPanel.addActionListener(this);
-        connectionPanel.add(l_register_connectionPanel);
-        connectionPanel.add(fieldPanel_connectionPanel);
-        connectionPanel.add(b_register_connectionPanel);
+        connectionPanel.add(l_register);
+        connectionPanel.add(fieldPanel);
+        connectionPanel.add(b_register);
+        b_back.setAlignmentX(Component.CENTER_ALIGNMENT);
+        connectionPanel.add(b_back);
         Component add = add(this.connectionPanel);
         this.add(add);
         
     }
 
-    public JTextField getEmailField_connectionPanel() {
-        return emailField_connectionPanel;
+    public JTextField getEmailField() {
+        return emailField;
     }
 
-    public JTextField getPasswordField_connectionPanel() {
-        return passwordField_connectionPanel;
+    public JTextField getPasswordField() {
+        return passwordField;
     }
     
     /**
@@ -82,8 +85,10 @@ public class ConnectionPanel extends JPanel{
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
         JButton bouton;
         bouton = switch (nomBouton) {
+            case "Retour" ->
+                bouton = this.b_back;
             case "Connexion" ->
-                bouton = this.b_register_connectionPanel;
+                bouton = this.b_register;
             default ->
                 null;
         };

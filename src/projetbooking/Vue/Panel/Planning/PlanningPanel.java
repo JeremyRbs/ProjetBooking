@@ -64,8 +64,8 @@ public class PlanningPanel extends JPanel {
   public PlanningPanel(int niveau) {
       
     super();
-    //this.beginPanel_planning.setYYMMDD(calendar_planning.get(Calendar.YEAR), calendar_planning.get(Calendar.MONTH),calendar_planning.get(Calendar.DAY_OF_MONTH));
-    //this.getAccessibleContext().setAccessibleDescription("Le calendrier n'est pas accessible maintenant. Désolé !");
+    this.setYYMMDD(calendar_planning.get(Calendar.YEAR), calendar_planning.get(Calendar.MONTH),calendar_planning.get(Calendar.DAY_OF_MONTH));
+    this.getAccessibleContext().setAccessibleDescription("Le calendrier n'est pas accessible maintenant. Désolé !");
     
     // North Panel
     
@@ -184,7 +184,9 @@ public class PlanningPanel extends JPanel {
     this.beginPanel_planning.add(sp, BorderLayout.EAST);
     
     // South Panel
-    if(niveau == 3){
+    if(niveau == 2){
+        this.southPanel_planning.add(this.reservation_planning, BorderLayout.NORTH);
+    }else if(niveau == 3){
         this.southPanel_planning.add(this.reservation_planning, BorderLayout.NORTH);
         this.southPanel_planning.add(this.salle_planning, BorderLayout.CENTER);
         this.southPanel_planning.add(this.equipement_planning, BorderLayout.SOUTH);
