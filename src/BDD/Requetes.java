@@ -56,6 +56,22 @@ public class Requetes {
         return 3;//niveau;
     }
     
+    public static boolean deleteAccount(Statement statement, String mail){
+        
+        String delete="DELETE FROM utilisateurs WHERE mail='"+mail+"'";
+        
+        if(statement!=null){
+            try{
+                return statement.execute(delete);
+            }
+            catch (SQLException ex) {
+                System.out.println("Erreur de création de la base de donnée " + ex);
+            }
+        }return false; //A VERIFIER
+    };
+    
+    //public static void createRoom (Statement statement, String){
+    
     public static void afficherEquipement(Statement statement, Object[][] data) {
         
         String connectTable = "SELECT * FROM equipement";

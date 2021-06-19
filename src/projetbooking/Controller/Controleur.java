@@ -159,8 +159,9 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
                 System.out.println(this.listeTexte.get(1).toString());
                 
                 if (statement != null) {
+                    //for(int i=0; i<listeTexte.size();i++){}
                     //Execution de requête de lecture sur l'objet Statement
-                    if (createAccount(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString(), this.listeTexte.get(2).toString(), this.listeTexte.get(3).toString()) == false ){
+                    if (createAccount(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString(), this.listeTexte.get(2).toString(), this.listeTexte.get(3).toString()) == true ){
                         laVue.activatePanel("planningPanel_1");
                     }
                 }
