@@ -6,6 +6,7 @@ package projetbooking.Vue;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import projetbooking.Vue.Panel.Booking.AddBookingPanel;
 import projetbooking.Vue.Panel.Booking.AdminBookingPanel;
@@ -69,23 +70,32 @@ public class Vue extends JFrame {
     // Room Panel
     private RoomPanel roomPanel = new RoomPanel();
     private AddRoomPanel addRoomPanel = new AddRoomPanel();
-    private EditRoomPanel editRoomPanel = new EditRoomPanel();
-    private RemoveRoomPanel removeRoomPanel = new RemoveRoomPanel();
+    private EditRoomPanel editRoomPanel;
+    private RemoveRoomPanel removeRoomPanel;
     
     // Equipment Panel
     private EquipmentPanel equipmentPanel = new EquipmentPanel();
     private AddEquipmentPanel addEquipmentPanel = new AddEquipmentPanel();
-    private EditEquipmentPanel editEquipmentPanel = new EditEquipmentPanel();
-    private RemoveEquipmentPanel removeEquipmentPanel = new RemoveEquipmentPanel();
+    private EditEquipmentPanel editEquipmentPanel;
+    private RemoveEquipmentPanel removeEquipmentPanel;
 
     ////////////////////////////////////////////////////////////////////////
     ////////////////// Constructeur de la classe Fenetre ///////////////////
     ////////////////////////////////////////////////////////////////////////
 
-    public Vue()
+    public Vue() throws SQLException
     {
 
         //////////////////////////////////////////////////
+        
+        ////////////////////////////////////
+        /////////// SQL Exception //////////
+        ////////////////////////////////////
+        
+        this.editEquipmentPanel = new EditEquipmentPanel();
+        this.removeEquipmentPanel = new RemoveEquipmentPanel();
+        this.editRoomPanel = new EditRoomPanel();
+        this.removeRoomPanel = new RemoveRoomPanel();
 
         ////////////////////////////////////
         /////// Panneau de démarrage ///////
@@ -142,17 +152,18 @@ public class Vue extends JFrame {
         }
         
         ////// Planning 2 ///////
+        
         // Panneau de réservation
         if(this.currentPanel.equals(this.addBookingPanel) || this.currentPanel.equals(this.editBookingPanel) || this.currentPanel.equals(this.removeBookingPanel)){
             this.previousPanel = this.bookingPanel;
         }
         
         if(this.currentPanel.equals(this.bookingPanel)){
-            this.previousPanel = this.planningPanel_2;
+            this.previousPanel = this.planningPanel_3;
         }
         
         ////// Planning 3 ///////
-        if(this.currentPanel.equals(this.roomPanel) && this.previousPanel.equals(this.planningPanel_3)){
+        if(this.currentPanel.equals(this.roomPanel) || this.currentPanel.equals(this.equipmentPanel)){
             this.previousPanel = this.planningPanel_3;
         }
         

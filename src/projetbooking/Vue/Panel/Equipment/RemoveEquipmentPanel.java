@@ -5,11 +5,15 @@
  */
 package projetbooking.Vue.Panel.Equipment;
 
+import static BDD.Requetes.connexion;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,20 +36,34 @@ public class RemoveEquipmentPanel extends JPanel{
     private JButton b_remove = new JButton("Supprimer l'équipement");
     private JButton b_back = new JButton("Retour");
     
-    public RemoveEquipmentPanel(){
+    /////// Connexion BDD ///////
+    private Statement statement = connexion();
+    
+    public RemoveEquipmentPanel() throws SQLException{
 
-        
+        ResultSet res;
+                
         String[] columnNames = {"Identifiant",
                                 "Nom",
                                 "Actions"};
 
-        Object[][] data = {
-	    {1, "Salle", true},
-	    {2, "Salle", false},
-	    {3, "Salle", false},
-	    {4, "Salle", false},
-	    {5, "Salle", false}
-        };
+        Object[][] data = new Object[8][3];
+
+        this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+        String query = "SELECT * FROM equipement";
+        if(this.statement != null){
+            res = statement.executeQuery(query);
+            int i = 0;
+            while (res.next()) {
+              int id = res.getInt("IdEquipement");
+              String nom = res.getString("NomEquipement");
+              boolean actions = res.getBoolean("Actions");
+              data[i][0] = id + "";
+              data[i][1] = nom;
+              data[i][2] = false;
+              i++;
+            }
+        }
 
         final JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));

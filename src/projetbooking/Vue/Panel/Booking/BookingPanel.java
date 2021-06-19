@@ -81,7 +81,7 @@ public class BookingPanel extends JPanel{
             case "Supprimer un équipement" ->
                 bouton = this.b_remove;
             case "Réservations Administrateur" ->
-                bouton = this.b_remove;
+                bouton = this.b_validate;
             default ->
                 null;
         };

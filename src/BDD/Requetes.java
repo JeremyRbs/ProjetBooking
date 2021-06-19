@@ -55,5 +55,28 @@ public class Requetes {
         }
         return 3;//niveau;
     }
+    
+    public static void afficherEquipement(Statement statement, Object[][] data) {
+        
+        String connectTable = "SELECT * FROM equipement";
+        
+        if (statement != null) {
+            try {
+                ResultSet res = statement.executeQuery(connectTable);
+                int i = 0;
+                while (res.next()) {
+                    int id = res.getInt("IdEquipement");
+                    String nom = res.getString("NomEquipement");
+                    boolean actions = res.getBoolean("Actions");
+                    data[i][0] = id + "";
+                    data[i][1] = nom;
+                    data[i][2] = actions;
+                    i++;
+                }
+            } catch (SQLException ex) {
+                System.out.println("Erreur de création de la base de donnée " + ex);
+            }
+        }
+    }
 
 }

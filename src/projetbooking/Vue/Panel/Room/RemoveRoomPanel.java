@@ -5,11 +5,15 @@
  */
 package projetbooking.Vue.Panel.Room;
 
+import static BDD.Requetes.connexion;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,27 +36,40 @@ public class RemoveRoomPanel extends JPanel{
     private JButton b_remove = new JButton("Supprimer la salle");
     private JButton b_back = new JButton("Retour");
     
-    public RemoveRoomPanel(){
+    /////// Connexion BDD ///////
+    private Statement statement = connexion();
+    
+    public RemoveRoomPanel() throws SQLException{
 
-        
+        ResultSet res;
+                
         String[] columnNames = {"Identifiant",
                                 "Nom",
                                 "Taille",
                                 "Équipement",
                                 "Actions"};
 
-        Object[][] data = {
-	    {"Kathy", "Smith",
-	     "Snowboarding", new Integer(5), true},
-	    {"John", "Doe",
-	     "Rowing", new Integer(3), false},
-	    {"Sue", "Black",
-	     "Knitting", new Integer(2), false},
-	    {"Jane", "White",
-	     "Speed reading", new Integer(20), false},
-	    {"Joe", "Brown",
-	     "Pool", new Integer(10), false}
-        };
+        Object[][] data = new Object[8][5];
+
+        this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+        String query = "SELECT * FROM salles";
+        if(this.statement != null){
+            res = statement.executeQuery(query);
+            int i = 0;
+            while (res.next()) {
+              int id = res.getInt("IdSalle");
+              String nom = res.getString("NomSalle");
+              int taille = res.getInt("TailleSalle");
+              String equipement = res.getString("Equipement");
+              //boolean actions = res.getBoolean("Actions");
+              data[i][0] = id + "";
+              data[i][1] = nom;
+              data[i][2] = taille;
+              data[i][3] = equipement;
+              data[i][4] = false;
+              i++;
+            }
+        }
 
         final JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
