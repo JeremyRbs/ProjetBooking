@@ -39,11 +39,11 @@ public class RemoveEquipmentPanel extends JPanel{
     /////// Connexion BDD ///////
     private Statement statement = connexion();
     
-    public RemoveEquipmentPanel() throws SQLException{
+    public RemoveEquipmentPanel() throws SQLException {
 
         ResultSet res;
                 
-        String[] columnNames = {"Identifiant",
+        String[] columnNames = {"Id",
                                 "Nom",
                                 "Actions"};
 
@@ -57,7 +57,7 @@ public class RemoveEquipmentPanel extends JPanel{
             while (res.next()) {
               int id = res.getInt("IdEquipement");
               String nom = res.getString("NomEquipement");
-              boolean actions = res.getBoolean("Actions");
+              //boolean actions = res.getBoolean("Actions");
               data[i][0] = id + "";
               data[i][1] = nom;
               data[i][2] = false;

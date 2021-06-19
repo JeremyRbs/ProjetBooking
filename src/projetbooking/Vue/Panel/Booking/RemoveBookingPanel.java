@@ -5,12 +5,15 @@
  */
 package projetbooking.Vue.Panel.Booking;
 
-import projetbooking.Vue.Panel.Equipment.*;
+import static BDD.Requetes.connexion;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,24 +32,44 @@ public class RemoveBookingPanel extends JPanel{
             centerPanel = new JPanel(new BorderLayout()),
             southPanel = new JPanel(new BorderLayout());
     
-    private JLabel titre = new JLabel("Supprimer l'équipement");
-    private JButton b_remove = new JButton("Supprimer l'équipement");
+    private JLabel titre = new JLabel("Supprimer la réservation");
+    private JButton b_remove = new JButton("Supprimer la réservation");
     private JButton b_back = new JButton("Retour");
     
-    public RemoveBookingPanel(){
+    /////// Connexion BDD ///////
+    private Statement statement = connexion();
+    
+    public RemoveBookingPanel() throws SQLException{
 
-        
-        String[] columnNames = {"Identifiant",
-                                "Nom",
+        ResultSet res;
+                
+        String[] columnNames = {"Id",
+                                "Créateur",
+                                "Date",
+                                "IdSalle",
                                 "Actions"};
 
-        Object[][] data = {
-	    {1, "Salle", true},
-	    {2, "Salle", false},
-	    {3, "Salle", false},
-	    {4, "Salle", false},
-	    {5, "Salle", false}
-        };
+        Object[][] data = new Object[8][5];
+
+        this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+        String query = "SELECT * FROM reunions";
+        if(this.statement != null){
+            res = statement.executeQuery(query);
+            int i = 0;
+            while (res.next()) {
+              int id = res.getInt("id_reunion");
+              String nom = res.getString("mail_organisateur");
+              String date = res.getString("date_reunion");
+              String idSalle = res.getString("num_salle");
+              //boolean actions = res.getBoolean("Actions");
+              data[i][0] = id;
+              data[i][1] = nom;
+              data[i][2] = date;
+              data[i][3] = idSalle;
+              data[i][4] = false;
+              i++;
+            }
+        }
 
         final JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
@@ -103,7 +126,7 @@ public class RemoveBookingPanel extends JPanel{
         bouton = switch (nomBouton) {
             case "Retour" ->
                 bouton = this.b_back;
-            case "Supprimer l'équipement" ->
+            case "Supprimer la réservation" ->
                 bouton = this.b_remove;
             default ->
                 null;

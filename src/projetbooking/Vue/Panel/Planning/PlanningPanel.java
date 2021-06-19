@@ -58,7 +58,7 @@ public class PlanningPanel extends JPanel {
     private JComboBox yearChoice_planning; // l'année sélectionnée
  
   /**
-   * Constructeur de Cal
+   * Constructeur
      * @param niveau
    */
   public PlanningPanel(int niveau) {

@@ -5,6 +5,9 @@
  */
 package projetbooking.Vue;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import projetbooking.Controller.Controleur;
@@ -21,9 +24,14 @@ public class Main {
     //On soumet l'intialisation de l'interface graphique à la file d'attente de l'EDT (Event Dispatching Thread)
           SwingUtilities.invokeLater(() -> {
               //Création d'une contrôleur qui communique avec une vue et un modèle
-              Controleur controleur = new Controleur(new Vue(),new Modele());
-              controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-              controleur.getVue().setVisible(true);
+              Controleur controleur;
+              try {
+                    controleur = new Controleur(new Vue(),new Modele());
+                    controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    controleur.getVue().setVisible(true);
+              } catch (SQLException ex) {
+                  Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+              }
           });
     }
 }

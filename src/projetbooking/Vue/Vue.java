@@ -70,14 +70,14 @@ public class Vue extends JFrame {
     // Room Panel
     private RoomPanel roomPanel = new RoomPanel();
     private AddRoomPanel addRoomPanel = new AddRoomPanel();
-    private EditRoomPanel editRoomPanel;
-    private RemoveRoomPanel removeRoomPanel;
+    private EditRoomPanel editRoomPanel = new EditRoomPanel();
+    private RemoveRoomPanel removeRoomPanel = new RemoveRoomPanel();
     
     // Equipment Panel
     private EquipmentPanel equipmentPanel = new EquipmentPanel();
     private AddEquipmentPanel addEquipmentPanel = new AddEquipmentPanel();
-    private EditEquipmentPanel editEquipmentPanel;
-    private RemoveEquipmentPanel removeEquipmentPanel;
+    private EditEquipmentPanel editEquipmentPanel = new EditEquipmentPanel();
+    private RemoveEquipmentPanel removeEquipmentPanel = new RemoveEquipmentPanel();
 
     ////////////////////////////////////////////////////////////////////////
     ////////////////// Constructeur de la classe Fenetre ///////////////////
@@ -87,15 +87,6 @@ public class Vue extends JFrame {
     {
 
         //////////////////////////////////////////////////
-        
-        ////////////////////////////////////
-        /////////// SQL Exception //////////
-        ////////////////////////////////////
-        
-        this.editEquipmentPanel = new EditEquipmentPanel();
-        this.removeEquipmentPanel = new RemoveEquipmentPanel();
-        this.editRoomPanel = new EditRoomPanel();
-        this.removeRoomPanel = new RemoveRoomPanel();
 
         ////////////////////////////////////
         /////// Panneau de démarrage ///////

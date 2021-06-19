@@ -36,7 +36,7 @@ public class AddBookingPanel extends JPanel {
     private JTextField nameField = new JTextField(15);
     
     //JButton
-    private JButton b_add = new JButton("Ajouter l'équipement"),
+    private JButton b_add = new JButton("Ajouter la réservation"),
             b_back = new JButton("Retour");
     
     // Constructeur de la classe
@@ -81,7 +81,7 @@ public class AddBookingPanel extends JPanel {
         bouton = switch (nomBouton) {
             case "Retour" ->
                 bouton = this.b_back;
-            case "Ajouter l'équipement" ->
+            case "Ajouter la réservation" ->
                 bouton = this.b_add;
             default ->
                 null;

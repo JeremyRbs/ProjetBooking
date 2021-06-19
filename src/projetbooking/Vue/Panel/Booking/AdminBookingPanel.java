@@ -5,11 +5,15 @@
  */
 package projetbooking.Vue.Panel.Booking;
 
+import static BDD.Requetes.connexion;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,20 +36,44 @@ public class AdminBookingPanel extends JPanel {
     private JButton b_edit = new JButton("Valider");
     private JButton b_back = new JButton("Retour");
     
-    public AdminBookingPanel(){
+    /////// Connexion BDD ///////
+    private Statement statement = connexion();
+    
+    public AdminBookingPanel() throws SQLException{
 
         
-        String[] columnNames = {"Identifiant",
-                                "Nom",
+        ResultSet res;
+                
+        String[] columnNames = {"nom",
+                                "prenom",
+                                "mail",
+                                "tel",
+                                "niveau",
                                 "Actions"};
 
-        Object[][] data = {
-	    {1, "Salle", true},
-	    {2, "Salle", false},
-	    {3, "Salle", false},
-	    {4, "Salle", false},
-	    {5, "Salle", false}
-        };
+        Object[][] data = new Object[8][6];
+
+        this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+        String query = "SELECT * FROM utilisateurs";
+        if(this.statement != null){
+            res = statement.executeQuery(query);
+            int i = 0;
+            while (res.next()) {
+              String nom = res.getString("nom");
+              String prenom = res.getString("prenom");
+              String mail = res.getString("mail");
+              int tel = res.getInt("tel");
+              int niveau = res.getInt("niveau");
+              //boolean actions = res.getBoolean("Actions");
+              data[i][0] = nom;
+              data[i][1] = prenom;
+              data[i][2] = mail;
+              data[i][3] = tel;
+              data[i][4] = niveau;
+              data[i][5] = false;
+              i++;
+            }
+        }
 
         final JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));

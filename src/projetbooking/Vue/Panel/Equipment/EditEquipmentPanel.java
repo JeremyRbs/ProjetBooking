@@ -6,7 +6,6 @@
 package projetbooking.Vue.Panel.Equipment;
 
 import static BDD.Requetes.connexion;
-import projetbooking.Vue.Panel.Room.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -15,9 +14,7 @@ import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -42,11 +39,11 @@ public class EditEquipmentPanel extends JPanel{
     /////// Connexion BDD ///////
     private Statement statement = connexion();
     
-    public EditEquipmentPanel() throws SQLException{
+    public EditEquipmentPanel() throws SQLException {
         
         ResultSet res;
                 
-        String[] columnNames = {"Identifiant",
+        String[] columnNames = {"Id",
                                 "Nom",
                                 "Actions"};
 
@@ -60,7 +57,7 @@ public class EditEquipmentPanel extends JPanel{
             while (res.next()) {
               int id = res.getInt("IdEquipement");
               String nom = res.getString("NomEquipement");
-              boolean actions = res.getBoolean("Actions");
+              //boolean actions = res.getBoolean("Actions");
               data[i][0] = id + "";
               data[i][1] = nom;
               data[i][2] = false;
@@ -74,6 +71,7 @@ public class EditEquipmentPanel extends JPanel{
 
         if (DEBUG) {
             table.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(MouseEvent e) {
                     printDebugData(table);
                 }
