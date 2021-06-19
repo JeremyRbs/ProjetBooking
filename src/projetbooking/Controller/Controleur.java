@@ -142,6 +142,7 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
                 if (this.statement != null) {
                     //Execution de requête de lecture sur l'objet Statement
                     switch (connectAccount(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString())) {
+                        case 0 -> System.out.println("Erreur");
                         case 1 -> laVue.activatePanel("planningPanel_1");
                         case 2 -> laVue.activatePanel("planningPanel_2");
                         default -> laVue.activatePanel("planningPanel_3");
@@ -160,7 +161,7 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
                 if (statement != null) {
                     //Execution de requête de lecture sur l'objet Statement
                     if (createAccount(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString(), this.listeTexte.get(2).toString(), this.listeTexte.get(3).toString()) == false ){
-                        laVue.activatePanel("planningPanel");
+                        laVue.activatePanel("planningPanel_1");
                     }
                 }
                 break;

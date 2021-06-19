@@ -5,8 +5,6 @@
  */
 package projetbooking.Vue.Panel.Booking;
 
-import projetbooking.Vue.Panel.Equipment.*;
-import projetbooking.Vue.Panel.Room.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -55,6 +53,7 @@ public class EditBookingPanel extends JPanel{
 
         if (DEBUG) {
             table.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(MouseEvent e) {
                     printDebugData(table);
                 }

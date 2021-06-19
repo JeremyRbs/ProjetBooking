@@ -39,15 +39,21 @@ public class Requetes {
     public static int connectAccount(Statement statement, String mail, String password) {
         
         String connectTable = "SELECT `niveau` FROM `utilisateurs` WHERE utilisateurs.MAIL = '" + mail + "' AND utilisateurs.mdp = '" + password + "'";
-
+        
+        // Définit à 0 pour éviter des erreurs
+        int niveau = 0;
+        
         if (statement != null) {
             try {
-                statement.execute(connectTable);
+                ResultSet res = statement.executeQuery(connectTable);
+                if(res.next()){
+                    niveau = res.getInt("niveau");
+                }
             } catch (SQLException ex) {
                 System.out.println("Erreur de création de la base de donnée " + ex);
             }
         }
-        return 3;
+        return 3;//niveau;
     }
 
 }

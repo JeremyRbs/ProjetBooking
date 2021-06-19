@@ -136,22 +136,32 @@ public class Vue extends JFrame {
     
     public void backPanel(){
         
+        // Panneaux d'entrée au planning
         if(this.currentPanel.equals(this.connectionPanel) || this.currentPanel.equals(this.creationAccountPanel)){
             this.previousPanel = this.startPanel;
+        }
+        
+        ////// Planning 2 ///////
+        // Panneau de réservation
+        if(this.currentPanel.equals(this.addBookingPanel) || this.currentPanel.equals(this.editBookingPanel) || this.currentPanel.equals(this.removeBookingPanel)){
+            this.previousPanel = this.bookingPanel;
         }
         
         if(this.currentPanel.equals(this.bookingPanel)){
             this.previousPanel = this.planningPanel_2;
         }
         
-        if(this.currentPanel.equals(this.roomPanel) || this.currentPanel.equals(this.equipmentPanel)){
+        ////// Planning 3 ///////
+        if(this.currentPanel.equals(this.roomPanel) && this.previousPanel.equals(this.planningPanel_3)){
             this.previousPanel = this.planningPanel_3;
         }
         
+        // Panneau de la salle
         if(this.currentPanel.equals(this.addRoomPanel) || this.currentPanel.equals(this.editRoomPanel) || this.currentPanel.equals(this.removeRoomPanel)){
             this.previousPanel = this.roomPanel;
         }
         
+        // Panneau de l'équipement
         if(this.currentPanel.equals(this.addEquipmentPanel) || this.currentPanel.equals(this.editEquipmentPanel) || this.currentPanel.equals(this.removeEquipmentPanel)){
             this.previousPanel = this.equipmentPanel;
         }
@@ -244,7 +254,7 @@ public class Vue extends JFrame {
                 this.planningPanel_3.ajouterEcouteurBouton(nomBouton, listener);
             ////////////////////////////////////////////////////////////////////
                 
-            ////////////////////////// BookingPanel ///////////////////////////////
+            ////////////////////////// BookingPanel ////////////////////////////
             case "Créer une réservation":
                 this.bookingPanel.ajouterEcouteurBouton(nomBouton, listener);
             case "Modifier une réservation":
@@ -264,7 +274,8 @@ public class Vue extends JFrame {
                 
                 
             /////// AdminBookingPanel ///////
-
+            case "Valider":
+                this.adminBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
             ////////////////////////////////////////////////////////////////////
                 
             ////////////////////////// RoomPanel ///////////////////////////////
@@ -299,13 +310,22 @@ public class Vue extends JFrame {
                 
             // Retour
             case "Retour":
+                
                 this.connectionPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
                 this.creationAccountPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
                 this.roomPanel.ajouterEcouteurBouton(nomBouton, listener);
                 this.addRoomPanel.ajouterEcouteurBouton(nomBouton, listener);
                 this.editRoomPanel.ajouterEcouteurBouton(nomBouton, listener);
                 this.removeRoomPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
                 this.bookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.addBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.editBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.removeBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.adminBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
                 this.equipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
                 this.addEquipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
                 this.editEquipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
