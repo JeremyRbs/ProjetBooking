@@ -116,7 +116,7 @@ public class PlanningPanel extends JPanel {
         }
     });
     
-    add(BorderLayout.CENTER, this.westPanel_title_planning);
+    this.add(BorderLayout.CENTER, this.westPanel_title_planning);
     this.westPanel_planning.add(this.westPanel_title_planning);
  
     // Panneau pour sélectionner les jours

@@ -60,7 +60,7 @@ public class RemoveBookingPanel extends JPanel{
             res = statement.executeQuery(query);
             int i = 0;
             while (res.next()) {
-              int id = res.getInt("id_reunion");
+              int id = res.getInt("idReunion");
               String nom = res.getString("mail_organisateur");
               String date = res.getString("date_reunion");
               String idSalle = res.getString("num_salle");

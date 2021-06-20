@@ -57,7 +57,7 @@ public class AdminBookingPanel extends JPanel {
             res = statement.executeQuery(query);
             int i = 0;
             while (res.next()) {
-              String nom = res.getString("id_reunion");
+              String nom = res.getString("idReunion");
               String prenom = res.getString("mail_organisateur");
               String mail = res.getString("date_reunion");
               int num = res.getInt("num_salle");

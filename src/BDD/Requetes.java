@@ -2,6 +2,7 @@ package BDD;
 
 import static java.lang.Integer.parseInt;
 import java.sql.*;
+import java.sql.Date;
 
 /**
  *
@@ -118,8 +119,7 @@ public class Requetes {
      */
     public static boolean addReservation(Statement statement, String mail, String date, String heure, String numSalle) {
         
-        //System.out.println(date);
-        String createTable = "INSERT INTO `reunions` (`id_reunion`, `mail_organisateur`, `date_reunion`, `num_salle`) VALUES (NULL, '" + mail + "', " + date + ", " + parseInt(numSalle) + ")";
+        String createTable = "INSERT INTO `reunions` (`idReunion`, `mail_organisateur`, `date_reunion`, `num_salle`, `validation`) VALUES (NULL, '" + mail + "', '" + date + " " + heure + "', '" + parseInt(numSalle) + "', '" + 'N' + "')";
         boolean valide = true;
         
         if (statement != null) {
