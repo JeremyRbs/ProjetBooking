@@ -19,19 +19,25 @@ import projetbooking.Modele.Modele;
  */
 public class Main {
     
+    /**
+     * Méthode main() permettant de lancer l'application
+     * 
+     * @param args
+     */
     public static void main(String[] args){
             
-    //On soumet l'intialisation de l'interface graphique à la file d'attente de l'EDT (Event Dispatching Thread)
-          SwingUtilities.invokeLater(() -> {
-              //Création d'une contrôleur qui communique avec une vue et un modèle
-              Controleur controleur;
-              try {
-                    controleur = new Controleur(new Vue(),new Modele());
-                    controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    controleur.getVue().setVisible(true);
-              } catch (SQLException ex) {
-                  Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-              }
-          });
+        //On soumet l'intialisation de l'interface graphique à la file d'attente de l'EDT (Event Dispatching Thread)
+        SwingUtilities.invokeLater(() -> {
+            
+            //Création d'un contrôleur qui communique avec une vue et un modèle
+            Controleur controleur;
+            try {
+                  controleur = new Controleur(new Vue(),new Modele());
+                  controleur.getVue().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                  controleur.getVue().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 }

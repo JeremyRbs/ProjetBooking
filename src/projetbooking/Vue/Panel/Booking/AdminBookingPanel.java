@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.Booking;
 
 import static BDD.Requetes.connexion;
@@ -22,7 +17,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class AdminBookingPanel extends JPanel {
     
@@ -39,38 +34,38 @@ public class AdminBookingPanel extends JPanel {
     /////// Connexion BDD ///////
     private Statement statement = connexion();
     
+    /**
+     * Constructeur de AdminBookingPanel()
+     * 
+     * @throws java.sql.SQLException
+     */
     public AdminBookingPanel() throws SQLException{
 
         
         ResultSet res;
                 
-        String[] columnNames = {"nom",
-                                "prenom",
-                                "mail",
-                                "tel",
-                                "niveau",
-                                "Actions"};
+        String[] columnNames = {"Id",
+                                "Organisateur",
+                                "Date",
+                                "IdSalle"};
 
-        Object[][] data = new Object[8][6];
+        Object[][] data = new Object[50][5];
 
         this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
-        String query = "SELECT * FROM utilisateurs";
+        String query = "SELECT * FROM reunions";
         if(this.statement != null){
             res = statement.executeQuery(query);
             int i = 0;
             while (res.next()) {
-              String nom = res.getString("nom");
-              String prenom = res.getString("prenom");
-              String mail = res.getString("mail");
-              int tel = res.getInt("tel");
-              int niveau = res.getInt("niveau");
-              //boolean actions = res.getBoolean("Actions");
+              String nom = res.getString("id_reunion");
+              String prenom = res.getString("mail_organisateur");
+              String mail = res.getString("date_reunion");
+              int num = res.getInt("num_salle");
               data[i][0] = nom;
               data[i][1] = prenom;
               data[i][2] = mail;
-              data[i][3] = tel;
-              data[i][4] = niveau;
-              data[i][5] = false;
+              data[i][3] = num;
+              data[i][4] = false;
               i++;
             }
         }
@@ -88,10 +83,10 @@ public class AdminBookingPanel extends JPanel {
             });
         }
 
-        //Create the scroll pane and add the table to it.
+        // Création du scroll pane et ajout de la table
         JScrollPane scrollPane = new JScrollPane(table);
 
-        //Add the scroll pane to this panel.
+        // Ajout du scroll pane au panneau principal
         this.northPanel.add(this.titre, BorderLayout.CENTER);
         this.panel.add(this.northPanel, BorderLayout.NORTH);
         this.centerPanel.add(scrollPane, BorderLayout.CENTER);
@@ -102,6 +97,9 @@ public class AdminBookingPanel extends JPanel {
         add(this.panel);
     }
 
+    /**
+     * Permet d'afficher la valeur des dates
+     */
     private void printDebugData(JTable table) {
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();

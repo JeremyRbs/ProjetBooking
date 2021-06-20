@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.Room;
 
 import static BDD.Requetes.connexion;
@@ -22,7 +17,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class EditRoomPanel extends JPanel{
     
@@ -39,6 +34,10 @@ public class EditRoomPanel extends JPanel{
     /////// Connexion BDD ///////
     private Statement statement = connexion();
     
+    /**
+    * Constructeur de EditRoomPanel()
+    * @throws java.sql.SQLException
+    */
     public EditRoomPanel() throws SQLException{
         
         ResultSet res;
@@ -49,7 +48,7 @@ public class EditRoomPanel extends JPanel{
                                 "Équipement",
                                 "Actions"};
 
-        Object[][] data = new Object[8][5];
+        Object[][] data = new Object[50][5];
 
         this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
         String query = "SELECT * FROM salles";
@@ -77,16 +76,17 @@ public class EditRoomPanel extends JPanel{
 
         if (DEBUG) {
             table.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(MouseEvent e) {
                     printDebugData(table);
                 }
             });
         }
 
-        //Create the scroll pane and add the table to it.
+        // Création du scroll pane et ajout de la table
         JScrollPane scrollPane = new JScrollPane(table);
 
-        //Add the scroll pane to this panel.
+        // Ajout du scroll pane au panneau principal
         this.northPanel.add(this.titre, BorderLayout.CENTER);
         this.panel.add(this.northPanel, BorderLayout.NORTH);
         this.centerPanel.add(scrollPane, BorderLayout.CENTER);
@@ -97,6 +97,9 @@ public class EditRoomPanel extends JPanel{
         add(this.panel);
     }
 
+    /**
+     * Permet d'afficher la valeur des dates
+     */
     private void printDebugData(JTable table) {
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();

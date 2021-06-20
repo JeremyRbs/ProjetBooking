@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.Equipment;
 
 import java.awt.Component;
@@ -18,7 +13,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class AddEquipmentPanel extends JPanel {
     
@@ -38,7 +33,10 @@ public class AddEquipmentPanel extends JPanel {
     private JButton b_add = new JButton("Ajouter l'équipement"),
             b_back = new JButton("Retour");
     
-    // Constructeur de la classe
+    /**
+     * Constructeur de AddEquipmentPanel()
+     * 
+     */
     public AddEquipmentPanel(){
         
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
@@ -64,7 +62,11 @@ public class AddEquipmentPanel extends JPanel {
         
     }
 
-    // Getters
+    /**
+     * Getter de nameField
+     * 
+     * @return 
+     */
     public JTextField getNameField() {
         return nameField;
     }

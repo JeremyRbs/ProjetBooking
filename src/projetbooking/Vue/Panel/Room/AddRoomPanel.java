@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.Room;
 
 import java.awt.Component;
@@ -18,7 +13,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class AddRoomPanel extends JPanel {
     
@@ -42,7 +37,9 @@ public class AddRoomPanel extends JPanel {
     private JButton b_add = new JButton("Ajouter la salle"),
             b_back = new JButton("Retour");
     
-    // Constructeur de la classe
+    /**
+    * Constructeur de AddRoomPanel()
+    */
     public AddRoomPanel(){
         
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
@@ -73,15 +70,26 @@ public class AddRoomPanel extends JPanel {
         
     }
 
-    // Getters
+    /**
+    * Getter de nameField
+    * @return 
+    */
     public JTextField getNameField() {
         return nameField;
     }
 
+    /**
+    * Getter de tailleField
+    * @return 
+    */
     public JTextField getTailleField() {
         return tailleField;
     }
 
+    /**
+    * Getter de equipementField
+    * @return 
+    */
     public JTextField getEquipementField() {
         return equipementField;
     }

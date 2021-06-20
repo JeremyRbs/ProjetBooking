@@ -1,7 +1,5 @@
 package projetbooking.Vue.Panel.Planning;
 
-
- 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -58,8 +56,8 @@ public class PlanningPanel extends JPanel {
     private JComboBox yearChoice_planning; // l'année sélectionnée
  
   /**
-   * Constructeur
-     * @param niveau
+   * Constructeur de PlanningPanel()
+   * @param niveau
    */
   public PlanningPanel(int niveau) {
       
@@ -187,6 +185,7 @@ public class PlanningPanel extends JPanel {
     if(niveau == 2){
         this.southPanel_planning.add(this.reservation_planning, BorderLayout.NORTH);
     }else if(niveau == 3){
+        this.reservation_planning = new JButton("A - Réservation");
         this.southPanel_planning.add(this.reservation_planning, BorderLayout.NORTH);
         this.southPanel_planning.add(this.salle_planning, BorderLayout.CENTER);
         this.southPanel_planning.add(this.equipement_planning, BorderLayout.SOUTH);
@@ -205,6 +204,7 @@ public class PlanningPanel extends JPanel {
         this.setLocation(x, y);
     }
  
+    // Méthode permettant de récupérer la date
     private void setYYMMDD(int year, int month, int today) {
       yy_planning = year;
       mm_planning = month;
@@ -214,12 +214,13 @@ public class PlanningPanel extends JPanel {
     String[] months = { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
         "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" };
  
+    
     public final static int dom[] = { 31, 28, 31, 30, /* jan fev mar avr */
     31, 30, 31, 31, /* mai jui juil aou */
     30, 31, 30, 31 /* sep oct nov dec */
     };
  
-    /** Compute which days to put where, in the Cal panel */
+    // Méthode permettant de calculer quels jours mettre où dans le panneau du calendrier
     protected void recompute() {
 
       // System.out.println("Cal::recompute: " + yy + ":" + mm + ":" + dd);
@@ -267,16 +268,14 @@ public class PlanningPanel extends JPanel {
     }
  
     /**
-     * isLeap() returns true si l'année sélectionnée est bissextile.
+     * isLeap() returns true si l'année sélectionnée est bissextile."une année est bissextile si elle est divisible par 4 mais pas par 100, sauf
+ si elle est divisible par 400"
      *
-     * "une année est bissextile si elle est divisible par 4 mais pas par 100, sauf
-     * si elle est divisible par 400"
+     * @param year
+     * @return 
      */
     public boolean isLeap(int year) {
-      if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0){
-        return true;
-      }
-      return false;
+      return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
     }
  
     // Envoi du jour, du mois et de l'année
@@ -335,6 +334,8 @@ public class PlanningPanel extends JPanel {
             case "Déconnexion" ->
                 bouton = this.deconnection_planning;
             case "Réservation" ->
+                bouton = this.reservation_planning;
+            case "A - Réservation" ->
                 bouton = this.reservation_planning;
             case "Salle" ->
                 bouton = this.salle_planning;

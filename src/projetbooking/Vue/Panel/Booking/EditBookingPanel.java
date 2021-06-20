@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.Booking;
 
 import static BDD.Requetes.connexion;
@@ -22,7 +17,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class EditBookingPanel extends JPanel{
     
@@ -39,17 +34,26 @@ public class EditBookingPanel extends JPanel{
     /////// Connexion BDD ///////
     private Statement statement = connexion();
     
-    public EditBookingPanel() throws SQLException{
+    /**
+     * Constructeur de EditBookingPanel()
+     * 
+     * @param niveau
+     * @throws java.sql.SQLException
+     */
+    public EditBookingPanel(int niveau) throws SQLException{
+        
+        if(niveau == 3){
+            b_back = new JButton("A - Retour");
+        }
         
         ResultSet res;
                 
         String[] columnNames = {"Id",
                                 "Créateur",
                                 "Date",
-                                "IdSalle",
-                                "Actions"};
+                                "IdSalle"};
 
-        Object[][] data = new Object[8][5];
+        Object[][] data = new Object[50][4];
 
         this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
         String query = "SELECT * FROM reunions";
@@ -61,12 +65,10 @@ public class EditBookingPanel extends JPanel{
               String nom = res.getString("mail_organisateur");
               String date = res.getString("date_reunion");
               String idSalle = res.getString("num_salle");
-              //boolean actions = res.getBoolean("Actions");
               data[i][0] = id;
               data[i][1] = nom;
               data[i][2] = date;
               data[i][3] = idSalle;
-              data[i][4] = false;
               i++;
             }
         }
@@ -84,10 +86,10 @@ public class EditBookingPanel extends JPanel{
             });
         }
 
-        //Create the scroll pane and add the table to it.
+        // Création du scroll pane et ajout de la table
         JScrollPane scrollPane = new JScrollPane(table);
 
-        //Add the scroll pane to this panel.
+        // Ajout du scroll pane au panneau principal
         this.northPanel.add(this.titre, BorderLayout.CENTER);
         this.panel.add(this.northPanel, BorderLayout.NORTH);
         this.centerPanel.add(scrollPane, BorderLayout.CENTER);
@@ -98,6 +100,9 @@ public class EditBookingPanel extends JPanel{
         add(this.panel);
     }
 
+    /**
+     * Permet d'afficher la valeur des dates
+     */
     private void printDebugData(JTable table) {
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();
@@ -125,6 +130,8 @@ public class EditBookingPanel extends JPanel{
         JButton bouton;
         bouton = switch (nomBouton) {
             case "Retour" ->
+                bouton = this.b_back;
+            case "A - Retour" ->
                 bouton = this.b_back;
             case "Modifier la réservation" ->
                 bouton = this.b_edit;

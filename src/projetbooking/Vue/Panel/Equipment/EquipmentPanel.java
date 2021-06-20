@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.Equipment;
 
 import java.awt.Component;
@@ -17,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class EquipmentPanel extends JPanel{
     
@@ -28,6 +23,10 @@ public class EquipmentPanel extends JPanel{
     private final JButton b_remove = new JButton("Supprimer un équipement");
     private final JButton b_back = new JButton("Retour");
             
+    /**
+     * Constructeur de EquipmentPanel()
+     * 
+     */
     public EquipmentPanel(){
         
         //fieldPanel_connectionPanel et ses composants

@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.ConnectionPanel;
 
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,7 +13,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author jerem
+ * @author Jérémy RIBES
  */
 public class ConnectionPanel extends JPanel{
     
@@ -31,6 +24,10 @@ public class ConnectionPanel extends JPanel{
     private JButton b_register,
             b_back = new JButton("Retour");
     
+    /**
+     * Constructeur de ConnectionPanel()
+     * 
+     */
     public ConnectionPanel(){
         
         //fieldPanel_connectionPanel et ses composants
@@ -68,10 +65,20 @@ public class ConnectionPanel extends JPanel{
         
     }
 
+    /**
+     * Getter de emailField
+     * 
+     * @return 
+     */
     public JTextField getEmailField() {
         return emailField;
     }
 
+    /**
+     * Getter de passwordField
+     * 
+     * @return 
+     */
     public JTextField getPasswordField() {
         return passwordField;
     }

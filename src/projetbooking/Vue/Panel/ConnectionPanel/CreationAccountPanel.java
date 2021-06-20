@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author jerem
+ * @author Jérémy RIBES
  */
 public class CreationAccountPanel extends JPanel {
     
@@ -30,6 +30,10 @@ public class CreationAccountPanel extends JPanel {
     private JButton b_register,
             b_back = new JButton("Retour");
     
+    /**
+     * Constructeur de CreationAccountPanel()
+     * 
+     */
     public CreationAccountPanel(){
         
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
@@ -93,22 +97,47 @@ public class CreationAccountPanel extends JPanel {
         
     }
 
+    /**
+     * Getter de nameField
+     * 
+     * @return 
+     */
     public JTextField getNameField() {
         return nameField;
     }
 
+    /**
+     * Getter de firstNameField
+     * 
+     * @return 
+     */
     public JTextField getFirstNameField() {
         return firstNameField;
     }
 
+    /**
+     * Getter de emailField
+     * 
+     * @return 
+     */
     public JTextField getEmailField() {
         return emailField;
     }
 
+    /**
+     * Getter de passwordField
+     * 
+     * @return 
+     */
     public JTextField getPasswordField() {
         return passwordField;
     }
 
+    /**
+     * Getter de mobileField
+     * 
+     * @return 
+     */
     public JTextField getMobileField() {
         return mobileField;
     }

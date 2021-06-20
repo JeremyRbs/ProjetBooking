@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.Booking;
 
 import java.awt.Component;
@@ -17,19 +12,31 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class BookingPanel extends JPanel{
     
     /////// Panneau de connexion de compte ///////
     private JPanel roomPanel;
-    private final JButton b_create = new JButton("Créer une réservation");
-    private final JButton b_edit = new JButton("Modifier une réservation");
-    private final JButton b_remove = new JButton("Supprimer une réservation");
-    private final JButton b_validate = new JButton("Réservations Administrateur");
-    private final JButton b_back = new JButton("Retour");
+    private JButton b_create = new JButton("Créer une réservation");
+    private JButton b_edit = new JButton("Modifier une réservation");
+    private JButton b_remove = new JButton("Supprimer une réservation");
+    private JButton b_validate = new JButton("A - Réservations Administrateur");
+    private JButton b_back = new JButton("Retour");
             
-    public BookingPanel(){
+    /**
+     * Constructeur de BookingPanel()
+     * 
+     * @param niveau
+     */
+    public BookingPanel(int niveau){
+        
+        if(niveau == 3){
+            b_create = new JButton("A - Créer une réservation");
+            b_edit = new JButton("A - Modifier une réservation");
+            b_remove = new JButton("A - Supprimer une réservation");
+            b_back = new JButton("A - Retour");
+        }
         
         //fieldPanel_connectionPanel et ses composants
         Font font = new Font("MS Sans Serif", Font.BOLD, 18);
@@ -53,9 +60,11 @@ public class BookingPanel extends JPanel{
         b_remove.setAlignmentX(Component.CENTER_ALIGNMENT);
         roomPanel.add(b_remove);
         roomPanel.add(space_3);
-        b_validate.setAlignmentX(Component.CENTER_ALIGNMENT);
-        roomPanel.add(b_validate);
-        roomPanel.add(space_4);
+        if(niveau == 3){
+            b_validate.setAlignmentX(Component.CENTER_ALIGNMENT);
+            roomPanel.add(b_validate);
+            roomPanel.add(space_4);
+        }
         b_back.setAlignmentX(Component.CENTER_ALIGNMENT);
         roomPanel.add(b_back);
         Component add = add(this.roomPanel);
@@ -81,6 +90,16 @@ public class BookingPanel extends JPanel{
             case "Supprimer un équipement" ->
                 bouton = this.b_remove;
             case "Réservations Administrateur" ->
+                bouton = this.b_validate;
+            case "A - Retour" ->
+                bouton = this.b_back;
+            case "A - Créer un équipement" ->
+                bouton = this.b_create;
+            case "A - Modifier un équipement" ->
+                bouton = this.b_edit;
+            case "A - Supprimer un équipement" ->
+                bouton = this.b_remove;
+            case "A - Réservations Administrateur" ->
                 bouton = this.b_validate;
             default ->
                 null;

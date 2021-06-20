@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projetbooking.Vue.Panel.Equipment;
 
 import static BDD.Requetes.connexion;
@@ -22,7 +17,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class RemoveEquipmentPanel extends JPanel{
     
@@ -39,6 +34,11 @@ public class RemoveEquipmentPanel extends JPanel{
     /////// Connexion BDD ///////
     private Statement statement = connexion();
     
+    /**
+     * Constructeur de RemoveEquipmentPanel()
+     * 
+     * @throws java.sql.SQLException
+     */
     public RemoveEquipmentPanel() throws SQLException {
 
         ResultSet res;
@@ -47,7 +47,7 @@ public class RemoveEquipmentPanel extends JPanel{
                                 "Nom",
                                 "Actions"};
 
-        Object[][] data = new Object[8][3];
+        Object[][] data = new Object[50][3];
 
         this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
         String query = "SELECT * FROM equipement";
@@ -57,7 +57,6 @@ public class RemoveEquipmentPanel extends JPanel{
             while (res.next()) {
               int id = res.getInt("IdEquipement");
               String nom = res.getString("NomEquipement");
-              //boolean actions = res.getBoolean("Actions");
               data[i][0] = id + "";
               data[i][1] = nom;
               data[i][2] = false;
@@ -78,10 +77,10 @@ public class RemoveEquipmentPanel extends JPanel{
             });
         }
 
-        //Create the scroll pane and add the table to it.
+        // Création du scroll pane et ajout de la table
         JScrollPane scrollPane = new JScrollPane(table);
 
-        //Add the scroll pane to this panel.
+        // Ajout du scroll pane au panneau principal
         this.northPanel.add(this.titre, BorderLayout.CENTER);
         this.panel.add(this.northPanel, BorderLayout.NORTH);
         this.centerPanel.add(scrollPane, BorderLayout.CENTER);
@@ -92,6 +91,9 @@ public class RemoveEquipmentPanel extends JPanel{
         add(this.panel);
     }
 
+    /**
+     * Permet d'afficher la valeur des dates
+     */
     private void printDebugData(JTable table) {
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();

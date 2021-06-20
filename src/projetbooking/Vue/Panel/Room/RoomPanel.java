@@ -1,12 +1,5 @@
 package projetbooking.Vue.Panel.Room;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -19,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Jerem
+ * @author Jérémy RIBES
  */
 public class RoomPanel extends JPanel{
     
@@ -29,7 +22,10 @@ public class RoomPanel extends JPanel{
     private final JButton b_edit = new JButton("Modifier une salle");
     private final JButton b_remove = new JButton("Supprimer une salle");
     private final JButton b_back = new JButton("Retour");
-            
+         
+    /**
+     * Constructeur de RoomPanel()
+     */
     public RoomPanel(){
         
         //fieldPanel_connectionPanel et ses composants

@@ -1,9 +1,8 @@
 package projetbooking.Controller;
 
-/**
- * Cours NF0A19 - Chapitre 6 - JUNIT sur architecture MVC
- *
- */
+import static BDD.Requetes.addEquipment;
+import static BDD.Requetes.addReservation;
+import static BDD.Requetes.addRoom;
 import static BDD.Requetes.connectAccount;
 import static BDD.Requetes.connexion;
 import static BDD.Requetes.createAccount;
@@ -21,7 +20,7 @@ import projetbooking.Vue.Vue;
 /**
  * La classe Controleur represente le modèle de l'architecture MVC.
  *
- * @author Hervé Martinez
+ * @author Jérémy RIBES
  */
 public class Controleur extends KeyAdapter implements MouseListener, ActionListener {
 
@@ -61,6 +60,7 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
         // PlanningPanel
         uneVue.ajouterEcouteurBouton("Déconnexion", this);
         uneVue.ajouterEcouteurBouton("Réservation", this);
+        uneVue.ajouterEcouteurBouton("A - Réservation", this);
         uneVue.ajouterEcouteurBouton("Salle", this);
         uneVue.ajouterEcouteurBouton("Équipement", this);
         
@@ -68,6 +68,25 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
         uneVue.ajouterEcouteurBouton("Créer une réservation", this);
         uneVue.ajouterEcouteurBouton("Modifier une réservation", this);
         uneVue.ajouterEcouteurBouton("Supprimer une réservation", this);
+        uneVue.ajouterEcouteurBouton("A - Créer une réservation", this);
+        uneVue.ajouterEcouteurBouton("A - Modifier une réservation", this);
+        uneVue.ajouterEcouteurBouton("A - Supprimer une réservation", this);
+        uneVue.ajouterEcouteurBouton("A - Réservations Administrateur", this);
+        
+        // AddBookingPanel
+        uneVue.ajouterEcouteurBouton("Ajouter la réservation", this);
+        
+        // EditBookingPanel
+        uneVue.ajouterEcouteurBouton("Modifier la réservation", this);
+        
+        // RemoveBookingPanel
+        uneVue.ajouterEcouteurBouton("Supprimer la réservation", this);
+       
+        // AdminBookingPanel
+        uneVue.ajouterEcouteurBouton("Valider", this);
+        
+        // AdminBookingPanel
+        uneVue.ajouterEcouteurBouton("Promouvoir", this);
                 
         // RoomPanel
         uneVue.ajouterEcouteurBouton("Créer une salle", this);
@@ -87,10 +106,19 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
         uneVue.ajouterEcouteurBouton("Créer un équipement", this);
         uneVue.ajouterEcouteurBouton("Modifier un équipement", this);
         uneVue.ajouterEcouteurBouton("Supprimer un équipement", this);
-        uneVue.ajouterEcouteurBouton("Réservations Administrateur", this);
+        
+        // AddEquipmentPanel
+        uneVue.ajouterEcouteurBouton("Ajouter l'équipement", this);
+        
+        // EditEquipmentPanel
+        uneVue.ajouterEcouteurBouton("Modifier l'équipement", this);
+        
+        // RemoveEquipmentPanel
+        uneVue.ajouterEcouteurBouton("Supprimer l'équipement", this);
         
         // Retour
         uneVue.ajouterEcouteurBouton("Retour", this);
+        uneVue.ajouterEcouteurBouton("A - Retour", this);
         
         // Écouteurs champs texte
     }
@@ -155,15 +183,19 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
                 this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
                 listeTexte.clear();
                 listeTexte = this.laVue.getText("CreationAccountPanel");
-                System.out.println(listeTexte.size());
-                System.out.println(this.listeTexte.get(1).toString());
+                System.out.println("ok");
                 
-                if (statement != null) {
-                    //for(int i=0; i<listeTexte.size();i++){}
-                    //Execution de requête de lecture sur l'objet Statement
-                    if (createAccount(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString(), this.listeTexte.get(2).toString(), this.listeTexte.get(3).toString()) == true ){
-                        laVue.activatePanel("planningPanel_1");
+                if(!"".equals(this.listeTexte.get(0).toString()) && !"".equals(this.listeTexte.get(1).toString()) && !"".equals(this.listeTexte.get(2).toString())  && !"".equals(this.listeTexte.get(3).toString()) && !"".equals(this.listeTexte.get(4).toString())){
+                    if (statement != null) {
+                        //Execution de requête de lecture sur l'objet Statement
+                        if (createAccount(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString(), this.listeTexte.get(2).toString(), this.listeTexte.get(3).toString(), this.listeTexte.get(4).toString()) == true ){
+                            laVue.activatePanel("planningPanel_1");
+                        }else{
+                            laVue.activatePanel("CreationAccountPanel");
+                        }
                     }
+                }else{
+                    laVue.activatePanel("CreationAccountPanel");
                 }
                 break;
                 
@@ -172,7 +204,10 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
                 laVue.activatePanel("startPanel");
                 break;
             case "Réservation" :
-                laVue.activatePanel("bookingPanel");
+                laVue.activatePanel("bookingPanel_2");
+                break;
+            case "A - Réservation" :
+                laVue.activatePanel("bookingPanel_3");
                 break;
             case "Salle" :
                 laVue.activatePanel("roomPanel");
@@ -183,16 +218,58 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
                 
             // BookingPanel
             case "Créer une réservation" :
-                laVue.activatePanel("addBookingPanel");
+                laVue.activatePanel("addBookingPanel_2");
                 break;
             case "Modifier une réservation" :
-                laVue.activatePanel("editBookingPanel");
+                laVue.activatePanel("editBookingPanel_2");
                 break;
             case "Supprimer une réservation" :
-                laVue.activatePanel("removeBookingPanel");
+                laVue.activatePanel("removeBookingPanel_2");
                 break;
-            case "Réservations Administrateur" :
+            case "A - Créer une réservation" :
+                laVue.activatePanel("addBookingPanel_3");
+                break;
+            case "A - Modifier une réservation" :
+                laVue.activatePanel("editBookingPanel_3");
+                break;
+            case "A - Supprimer une réservation" :
+                laVue.activatePanel("removeBookingPanel_3");
+                break;
+            case "A - Réservations Administrateur" :
                 laVue.activatePanel("adminBookingPanel");
+                break;
+            
+            // AddBookingPanel
+            case "Ajouter la réservation" :
+                this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+                listeTexte.clear();
+                listeTexte = this.laVue.getText("AddBookingPanel_2");
+                listeTexte = this.laVue.getText("AddBookingPanel_3");
+//                System.out.println(listeTexte.size());
+//                System.out.println(this.listeTexte.get(0).toString());
+                
+                if (this.statement != null) {
+                    //Execution de requête de lecture sur l'objet Statement
+                    if (addReservation(statement, this.laVue.getMail(), this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString(), this.listeTexte.get(2).toString())) {
+                        System.out.println("Ok");
+                    }
+                }
+                break;
+                
+            // EditBookingPanel
+            case "Modifier la réservation" :
+                break;
+                
+            // RemoveBookingPanel
+            case "Supprimer la réservation" :
+                break;
+                
+            // AdminBookingPanel
+            case "Valider" :
+                break;
+                
+            // PromoteUserPanel
+            case "Promouvoir" :
                 break;
                 
             // RoomPanel
@@ -208,7 +285,18 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
                 
             // AddRoomPanel
             case "Ajouter la salle" :
-                //laVue.activatePanel("addRoomPanel");
+                this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+                listeTexte.clear();
+                listeTexte = this.laVue.getText("AddRoomPanel");
+                System.out.println(listeTexte.size());
+                System.out.println(this.listeTexte.get(0).toString());
+                
+                if (null != this.statement) {
+                    //Execution de requête de lecture sur l'objet Statement
+                    if (addRoom(statement, this.listeTexte.get(0).toString(), this.listeTexte.get(1).toString(), this.listeTexte.get(2).toString())) {
+                        System.out.println("Ok");
+                    }
+                }
                 break;
             // EditRoomPanel
             case "Modifier la salle" :
@@ -229,11 +317,41 @@ public class Controleur extends KeyAdapter implements MouseListener, ActionListe
             case "Supprimer un équipement" :
                 laVue.activatePanel("removeEquipmentPanel");
                 break;
+            
+            // AddEquipmentPanel
+            case "Ajouter l'équipement" :
+                this.statement = connexion(); //Opération d'initialisation du driver, de la base de données et du Statement
+                listeTexte.clear();
+                listeTexte = this.laVue.getText("AddEquipmentPanel");
+//                System.out.println(listeTexte.size());
+//                System.out.println(this.listeTexte.get(1).toString());
+                
+                if (this.statement != null) {
+                    //Execution de requête de lecture sur l'objet Statement
+                    if (addEquipment(statement, this.listeTexte.get(0).toString())) {
+                        System.out.println("Ok");
+                    }
+                }
+                break;
+            
+            // EditEquipmentPanel
+            case "Modifier l'équipement" :
+                laVue.activatePanel("editEquipmentPanel");
+                break;
+                
+            // RemoveEquipmentPanel
+            case "Supprimer l'équipement" :
+                laVue.activatePanel("removeEquipmentPanel");
+                break;
                 
             // Retour
             case "Retour" :
                 laVue.backPanel();
                 laVue.activatePanel("Retour");
+                break;
+            case "A - Retour" :
+                laVue.backPanel();
+                laVue.activatePanel("A - Retour");
                 break;
         }
     }

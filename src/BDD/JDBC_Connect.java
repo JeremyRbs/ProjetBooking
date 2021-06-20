@@ -5,10 +5,14 @@ import java.sql.*;
 
 /**
  *
- * @author Herv� Martinez
+ * @author Jérémy RIBES
  */
 public class JDBC_Connect {
 
+    /**
+     * Permet de se connecter à la base de données
+     * @return 
+     */
     public static Connection lot_Connect() {
         //L'Initialisation dynamique du driver n'est plus nécessaire il est automatiquement chargé en mémoire
         //Connection à la base de donnée

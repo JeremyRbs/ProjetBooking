@@ -1,9 +1,5 @@
 package projetbooking.Modele;
 
-/**
- * Cours NF0A19 - Chapitre 6 - JUNIT sur architecture MVC
- *
- */
 import projetbooking.Controller.EmptyModelException;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -13,7 +9,7 @@ import javax.swing.JOptionPane;
  * La classe Modele represente le modèle de l'architecture MVC. Elle contient
  * les données l'application Elle n'agit pas directement sur la vue
  *
- * @author Hervé Martinez
+ * @author Jérémy RIBES
  */
 public class Modele {
 
@@ -49,8 +45,7 @@ public class Modele {
      * Retire et retourne le dernier bouton ajouté à la pile du modèle
      *
      * @return le bouton retiré ou null si aucun bouton
-     * @throws ApplicationMVC.EmptyModelException Levée lorsque le modèle ne
-     * contient plus de boutons
+     * @throws projetbooking.Controller.EmptyModelException
      */
     public JButton pop() throws EmptyModelException {
         if (lesBoutons.isEmpty()) {
@@ -75,12 +70,7 @@ public class Modele {
      */
     public boolean contient(String nom) {
 
-        for (JButton bouton : lesBoutons) {
-            if (bouton.getText().toUpperCase().equals(nom.toUpperCase())) {
-                return true;
-            }
-        }
-        return false;
+        return lesBoutons.stream().anyMatch(bouton -> (bouton.getText().toUpperCase().equals(nom.toUpperCase())));
     }
 
     /**

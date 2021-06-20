@@ -27,6 +27,10 @@ public class StartPanel extends JPanel {
     /////// Bouton quitter pour fermer l'application ///////
     private JButton quitButton = new JButton("Quitter");
     
+    /**
+     * Constructeur de StartPanel()
+     * 
+     */
     public StartPanel(){
     
         //creationAccountPanel et ses composants
@@ -45,6 +49,12 @@ public class StartPanel extends JPanel {
         this.add(add);
     }
     
+    /**
+     * Permet d'ajouter un écouteur aux différents boutons
+     * 
+     * @param nomBouton
+     * @param listener
+     */
     public void ajouterEcouteurBouton(String nomBouton, ActionListener listener) {
         JButton bouton;
         bouton = switch (nomBouton) {

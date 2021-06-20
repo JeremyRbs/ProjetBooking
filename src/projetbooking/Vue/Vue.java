@@ -25,6 +25,7 @@ import projetbooking.Vue.Panel.Room.AddRoomPanel;
 import projetbooking.Vue.Panel.Room.EditRoomPanel;
 import projetbooking.Vue.Panel.Room.RemoveRoomPanel;
 import projetbooking.Vue.Panel.Room.RoomPanel;
+import projetbooking.error.ErrorTextEntryPanel;
 
 public class Vue extends JFrame {
 
@@ -44,6 +45,9 @@ public class Vue extends JFrame {
     // Pour le démarrage
     private boolean set = false;
     
+    // Enregistrement du mail de l'organisateur
+    private String mail;
+    
     /////// Panel ///////
     
     // StartPanel
@@ -61,10 +65,14 @@ public class Vue extends JFrame {
     private PlanningPanel planningPanel_3 = new PlanningPanel(3);
     
     // Booking Panel
-    private BookingPanel bookingPanel = new BookingPanel();
-    private AddBookingPanel addBookingPanel = new AddBookingPanel();
-    private EditBookingPanel editBookingPanel = new EditBookingPanel();
-    private RemoveBookingPanel removeBookingPanel = new RemoveBookingPanel();
+    private BookingPanel bookingPanel_2 = new BookingPanel(2);
+    private BookingPanel bookingPanel_3 = new BookingPanel(3);
+    private AddBookingPanel addBookingPanel_2 = new AddBookingPanel(2);
+    private EditBookingPanel editBookingPanel_2 = new EditBookingPanel(2);
+    private RemoveBookingPanel removeBookingPanel_2 = new RemoveBookingPanel(2);
+    private AddBookingPanel addBookingPanel_3 = new AddBookingPanel(3);
+    private EditBookingPanel editBookingPanel_3 = new EditBookingPanel(3);
+    private RemoveBookingPanel removeBookingPanel_3 = new RemoveBookingPanel(3);
     private AdminBookingPanel adminBookingPanel = new AdminBookingPanel();
     
     // Room Panel
@@ -78,11 +86,20 @@ public class Vue extends JFrame {
     private AddEquipmentPanel addEquipmentPanel = new AddEquipmentPanel();
     private EditEquipmentPanel editEquipmentPanel = new EditEquipmentPanel();
     private RemoveEquipmentPanel removeEquipmentPanel = new RemoveEquipmentPanel();
+    
+    // ErrorPanel
+    private ErrorTextEntryPanel errorTextEntryPanelVide = new ErrorTextEntryPanel("Vide");
+    private ErrorTextEntryPanel errorTextEntryPanelDuplicata = new ErrorTextEntryPanel("Duplicata");
 
     ////////////////////////////////////////////////////////////////////////
     ////////////////// Constructeur de la classe Fenetre ///////////////////
     ////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Constructeur de Vue()
+     * 
+     * @throws java.sql.SQLException
+     */
     public Vue() throws SQLException
     {
 
@@ -113,7 +130,9 @@ public class Vue extends JFrame {
     ///////////////////// Méthodes de la classe Fenetre ////////////////////
     ////////////////////////////////////////////////////////////////////////
 
-    // Méthode permettant de centrer la fenêtre
+    /**
+     * Permet de recentrer la fenêtre
+     */
     public void centerFrame() {
         Dimension currentScreen = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((currentScreen.getWidth() - this.getWidth()) / 2);
@@ -121,6 +140,11 @@ public class Vue extends JFrame {
         this.setLocation(x, y);
     }
 
+    /**
+     * Permet de changer de panneau
+     * 
+     * @param pane
+     */
     public void setPane(JPanel pane){
 
         if(this.currentPanel != null){
@@ -135,6 +159,9 @@ public class Vue extends JFrame {
         this.repaint();
     }
     
+    /**
+     * Permet de revenir au panneau précédent
+     */
     public void backPanel(){
         
         // Panneaux d'entrée au planning
@@ -145,17 +172,22 @@ public class Vue extends JFrame {
         ////// Planning 2 ///////
         
         // Panneau de réservation
-        if(this.currentPanel.equals(this.addBookingPanel) || this.currentPanel.equals(this.editBookingPanel) || this.currentPanel.equals(this.removeBookingPanel)){
-            this.previousPanel = this.bookingPanel;
+        if(this.currentPanel.equals(this.addBookingPanel_2) || this.currentPanel.equals(this.editBookingPanel_2) || this.currentPanel.equals(this.removeBookingPanel_2)){
+            this.previousPanel = this.bookingPanel_2;
         }
         
-        if(this.currentPanel.equals(this.bookingPanel)){
-            this.previousPanel = this.planningPanel_3;
+        if(this.currentPanel.equals(this.bookingPanel_2)){
+            this.previousPanel = this.planningPanel_2;
         }
         
         ////// Planning 3 ///////
-        if(this.currentPanel.equals(this.roomPanel) || this.currentPanel.equals(this.equipmentPanel)){
+        if(this.currentPanel.equals(this.roomPanel) || this.currentPanel.equals(this.equipmentPanel) || this.currentPanel.equals(this.bookingPanel_3)){
             this.previousPanel = this.planningPanel_3;
+        }
+        
+        // Panneau de réservation
+        if(this.currentPanel.equals(this.addBookingPanel_3) || this.currentPanel.equals(this.editBookingPanel_3) || this.currentPanel.equals(this.removeBookingPanel_3) || this.currentPanel.equals(this.adminBookingPanel)){
+            this.previousPanel = this.bookingPanel_3;
         }
         
         // Panneau de la salle
@@ -167,8 +199,18 @@ public class Vue extends JFrame {
         if(this.currentPanel.equals(this.addEquipmentPanel) || this.currentPanel.equals(this.editEquipmentPanel) || this.currentPanel.equals(this.removeEquipmentPanel)){
             this.previousPanel = this.equipmentPanel;
         }
+        
+        // Panneau des erreurs
+        if(this.currentPanel.equals(this.errorTextEntryPanelVide) || this.currentPanel.equals(this.errorTextEntryPanelDuplicata)){
+            this.previousPanel = this.creationAccountPanel;
+        }
     }
     
+    /**
+     * Permet d'activer les panneaux
+     * 
+     * @param namePanel
+     */
     public void activatePanel(String namePanel){
         this.setPane(
         switch(namePanel){
@@ -184,14 +226,22 @@ public class Vue extends JFrame {
                 this.planningPanel_2;
             case "planningPanel_3"->
                 this.planningPanel_3;
-            case "bookingPanel"->
-                this.bookingPanel;
-            case "addBookingPanel"->
-                this.addBookingPanel;
-            case "editBookingPanel"->
-                this.editBookingPanel;
-            case "removeBookingPanel"->
-                this.removeBookingPanel;
+            case "bookingPanel_2"->
+                this.bookingPanel_2;
+            case "bookingPanel_3"->
+                this.bookingPanel_3;
+            case "addBookingPanel_2"->
+                this.addBookingPanel_2;
+            case "addBookingPanel_3"->
+                this.addBookingPanel_3;
+            case "editBookingPanel_2"->
+                this.editBookingPanel_2;
+            case "editBookingPanel_3"->
+                this.editBookingPanel_3;
+            case "removeBookingPanel_2"->
+                this.removeBookingPanel_2;
+            case "removeBookingPanel_3"->
+                this.removeBookingPanel_3;
             case "adminBookingPanel"->
                 this.adminBookingPanel;
             case "roomPanel"->
@@ -210,7 +260,13 @@ public class Vue extends JFrame {
                 this.editEquipmentPanel;
             case "removeEquipmentPanel"->
                 this.removeEquipmentPanel;
+            case "ErrorTextEntryPanelVide"->
+                this.connectionPanel;
+            case "ErrorTextEntryPanelDuplicata"->
+                this.connectionPanel;
             case "Retour"->
+                this.previousPanel;
+            case "A - Retour"->
                 this.previousPanel;
             default->
                 null;
@@ -249,6 +305,7 @@ public class Vue extends JFrame {
                 this.planningPanel_3.ajouterEcouteurBouton(nomBouton, listener);
             case "Réservation":
                 this.planningPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+            case "A - Réservation":
                 this.planningPanel_3.ajouterEcouteurBouton(nomBouton, listener);
             case "Salle":
                 this.planningPanel_3.ajouterEcouteurBouton(nomBouton, listener);
@@ -258,22 +315,36 @@ public class Vue extends JFrame {
                 
             ////////////////////////// BookingPanel ////////////////////////////
             case "Créer une réservation":
-                this.bookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.bookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
             case "Modifier une réservation":
-                this.bookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.bookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
             case "Supprimer une réservation":
-                this.bookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.bookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
             case "Réservations Administrateur":
-                this.bookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.bookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+            case "A - Créer une réservation":
+                this.bookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
+            case "A - Modifier une réservation":
+                this.bookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
+            case "A - Supprimer une réservation":
+                this.bookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
+            case "A - Réservations Administrateur":
+                this.bookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
                 
             /////// AddBookingPanel ///////
-
+            case "Ajouter la réservation":
+                this.bookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+                this.bookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
                 
             /////// EditBookingPanel ///////
-
+            case "Modifier la réservation":
+                this.bookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+                this.bookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
                 
             /////// RemoveBookingPanel ///////
-                
+            case "Supprimer la réservation":
+                this.bookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+                this.bookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
                 
             /////// AdminBookingPanel ///////
             case "Valider":
@@ -308,6 +379,19 @@ public class Vue extends JFrame {
                 this.equipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
             case "Supprimer un équipement":
                 this.equipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
+            /////// AddRoomPanel ///////
+            case "Ajouter l'équipement":
+                this.addEquipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
+            /////// EditRoomPanel ///////
+            case "Modifier l'équipement":
+                this.editEquipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
+            /////// RemoveRoomPanel ///////
+            case "Supprimer l'équipement":
+                this.removeEquipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
+                
             ////////////////////////////////////////////////////////////////////
                 
             // Retour
@@ -322,10 +406,10 @@ public class Vue extends JFrame {
                 this.editRoomPanel.ajouterEcouteurBouton(nomBouton, listener);
                 this.removeRoomPanel.ajouterEcouteurBouton(nomBouton, listener);
                 
-                this.bookingPanel.ajouterEcouteurBouton(nomBouton, listener);
-                this.addBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
-                this.editBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
-                this.removeBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
+                this.bookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+                this.addBookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+                this.editBookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
+                this.removeBookingPanel_2.ajouterEcouteurBouton(nomBouton, listener);
                 this.adminBookingPanel.ajouterEcouteurBouton(nomBouton, listener);
                 
                 this.equipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
@@ -333,6 +417,11 @@ public class Vue extends JFrame {
                 this.editEquipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
                 this.removeEquipmentPanel.ajouterEcouteurBouton(nomBouton, listener);
                 
+            case "A - Retour":
+                this.bookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
+                this.addBookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
+                this.editBookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
+                this.removeBookingPanel_3.ajouterEcouteurBouton(nomBouton, listener);
         }
     }
     
@@ -353,6 +442,7 @@ public class Vue extends JFrame {
             case "ConnectionPanel":
                 listeTexte.add(this.connectionPanel.getEmailField().getText());
                 listeTexte.add(this.connectionPanel.getPasswordField().getText());
+                this.mail = this.connectionPanel.getEmailField().getText();
                 break;
             case "CreationAccountPanel":
                 listeTexte.add(this.creationAccountPanel.getNameField().getText());
@@ -360,11 +450,53 @@ public class Vue extends JFrame {
                 listeTexte.add(this.creationAccountPanel.getEmailField().getText());
                 listeTexte.add(this.creationAccountPanel.getPasswordField().getText());
                 listeTexte.add(this.creationAccountPanel.getMobileField().getText());
+                this.mail = this.creationAccountPanel.getEmailField().getText();
                 break;
-                
+            case "AdminBookingPanel":
+                break;
+            case "AddBookingPanel_2":
+                listeTexte.add(this.addBookingPanel_2.getDateField().getText());
+                listeTexte.add(this.addBookingPanel_2.getCombobox().getSelectedItem().toString());
+                listeTexte.add(this.addBookingPanel_2.getSalleField().getText());
+                break;
+            case "AddBookingPanel_3":
+                listeTexte.add(this.addBookingPanel_3.getDateField().getText());
+                listeTexte.add(this.addBookingPanel_3.getCombobox().getSelectedItem().toString());
+                listeTexte.add(this.addBookingPanel_3.getSalleField().getText());
+                break;
+            case "EditBookingPanel_2":
+                break;
+            case "EditBookingPanel_3":
+                break;
+            case "RemoveBookingPanel_2":
+                break;
+            case "RemoveBookingPanel_3":
+                break;
+            case "AddEquipmentPanel":
+                listeTexte.add(this.addEquipmentPanel.getNameField().getText());
+                break;
+            case "EditEquipmentPanel":
+                break;
+            case "RemoveEquipmentPanel":
+                break;
+            case "AddRoomPanel":
+                listeTexte.add(this.addRoomPanel.getNameField().getText());
+                listeTexte.add(this.addRoomPanel.getTailleField().getText());
+                listeTexte.add(this.addRoomPanel.getEquipementField().getText());
+                break;
+            case "EditRoomPanel":
+                break;
+            case "RemoveRoomPanel":
+                break;
         }
         
         // Renvoi de l'ArrayList
         return listeTexte;
     }
+
+    public String getMail() {
+        return mail;
+    }
+    
+    
 } 
