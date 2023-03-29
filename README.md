@@ -9,7 +9,7 @@ This project aimed to use the notions studied in class while working as a team.
     - RIBES Jérémy (Group leader)
     - MUTH Kévin
  
-You can find the project with the subject report near the README and just here some captures :
+You can find the project with the subject report near the README and just here some captures of the result :
 
 ![image](https://user-images.githubusercontent.com/71068295/228628776-baf70d88-7d1e-41c9-8166-b8365593bdee.png)
 
